@@ -14,7 +14,10 @@ export function ShopGrid() {
   const didMount = useRef(false);
 
   const filtered = useMemo<Product[]>(
-    () => (active === "all" ? products : products.filter((p) => p.category === active)),
+    () =>
+      active === "all"
+        ? products
+        : products.filter((p) => p.category === active),
     [active],
   );
 
@@ -32,7 +35,9 @@ export function ShopGrid() {
       return;
     }
     if (!gridRef.current) return;
-    const state = Flip.getState(gridRef.current.querySelectorAll(".product-card"));
+    const state = Flip.getState(
+      gridRef.current.querySelectorAll(".product-card"),
+    );
     // state captured AFTER re-render via rAF
     requestAnimationFrame(() => {
       Flip.from(state, {
@@ -41,8 +46,13 @@ export function ShopGrid() {
         stagger: 0.03,
         absolute: true,
         onEnter: (els) =>
-          gsap.fromTo(els, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.6 }),
-        onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.9, duration: 0.3 }),
+          gsap.fromTo(
+            els,
+            { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.6 },
+          ),
+        onLeave: (els) =>
+          gsap.to(els, { opacity: 0, scale: 0.9, duration: 0.3 }),
       });
     });
   }, [filtered]);
@@ -59,7 +69,7 @@ export function ShopGrid() {
               className={cn(
                 "shrink-0 font-mono text-xs uppercase tracking-widest px-4 py-2 border rounded-full transition-colors",
                 active === c.slug
-                  ? "bg-volt text-ink border-volt"
+                  ? "bg-MARES text-ink border-MARES"
                   : "border-cream/20 text-cream/80 hover:border-cream/60 hover:text-cream",
               )}
             >

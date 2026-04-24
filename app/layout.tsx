@@ -28,11 +28,11 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VOLT — Urban Uniform",
+  title: "MARES — Urban Uniform",
   description:
-    "VOLT is a streetwear label building the urban uniform. Technical outerwear, heavyweight basics, considered accessories.",
+    "MARES is a streetwear label building the urban uniform. Technical outerwear, heavyweight basics, considered accessories.",
   openGraph: {
-    title: "VOLT — Urban Uniform",
+    title: "MARES — Urban Uniform",
     description: "Streetwear, engineered.",
   },
 };
@@ -43,7 +43,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+    >
       <body className="bg-ink text-cream font-sans grain antialiased">
         <SmoothScroll>
           <CustomCursor />

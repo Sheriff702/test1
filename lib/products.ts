@@ -46,7 +46,8 @@ export const products: Product[] = [
       unsplash("photo-1556821840-3a63f95609a7"),
       unsplash("photo-1620799140408-edc6dcb6d633"),
     ],
-    description: "500gsm loopback fleece. Oversized cut, boxed shoulder, no-logo policy.",
+    description:
+      "500gsm loopback fleece. Oversized cut, boxed shoulder, no-logo policy.",
     drop: "CORE",
   },
   {
@@ -62,7 +63,8 @@ export const products: Product[] = [
       unsplash("photo-1624378441864-6eb7c2d8f71c"),
       unsplash("photo-1473966968600-fa801b869a1a"),
     ],
-    description: "Double-knee ripstop. Seven pockets, articulated gusset, silent hardware.",
+    description:
+      "Double-knee ripstop. Seven pockets, articulated gusset, silent hardware.",
     drop: "SS26",
   },
   {
@@ -72,13 +74,14 @@ export const products: Product[] = [
     price: 79,
     currency: "€",
     category: "tops",
-    colors: ["Ink", "Bone", "Volt"],
+    colors: ["Ink", "Bone", "MARES"],
     sizes: ["XS", "S", "M", "L", "XL"],
     images: [
       unsplash("photo-1583743814966-8936f5b7be1a"),
       unsplash("photo-1581655353564-df123a1eb820"),
     ],
-    description: "Heavyweight 260gsm tubular cotton. Boxy cut, drop shoulder, garment-dyed.",
+    description:
+      "Heavyweight 260gsm tubular cotton. Boxy cut, drop shoulder, garment-dyed.",
     drop: "CORE",
   },
   {
@@ -88,7 +91,7 @@ export const products: Product[] = [
     price: 349,
     currency: "€",
     category: "footwear",
-    colors: ["Bone", "Volt"],
+    colors: ["Bone", "MARES"],
     sizes: ["40", "41", "42", "43", "44", "45"],
     images: [
       unsplash("photo-1542291026-7eec264c27ff"),
@@ -110,7 +113,8 @@ export const products: Product[] = [
       unsplash("photo-1588850561407-ed78c282e89b"),
       unsplash("photo-1521369909029-2afed882baee"),
     ],
-    description: "Unstructured 6-panel. Brushed twill, brass eyelets, debossed wordmark.",
+    description:
+      "Unstructured 6-panel. Brushed twill, brass eyelets, debossed wordmark.",
     drop: "CORE",
   },
   {
@@ -126,7 +130,8 @@ export const products: Product[] = [
       unsplash("photo-1591047139829-d91aecb6caea"),
       unsplash("photo-1551488831-00ddcb6c6bd3"),
     ],
-    description: "Recycled nylon bomber. YKK Aquaguard zip, hidden internal stash pocket.",
+    description:
+      "Recycled nylon bomber. YKK Aquaguard zip, hidden internal stash pocket.",
     drop: "SS26",
   },
   {
@@ -146,13 +151,13 @@ export const products: Product[] = [
     drop: "CORE",
   },
   {
-    slug: "volt-beanie",
-    name: "Volt Beanie",
+    slug: "MARES-beanie",
+    name: "MARES Beanie",
     subtitle: "Core / Accessories",
     price: 49,
     currency: "€",
     category: "accessories",
-    colors: ["Volt", "Ink"],
+    colors: ["MARES", "Ink"],
     sizes: ["One Size"],
     images: [
       unsplash("photo-1578920024129-1c96e94a17d1"),
@@ -174,7 +179,8 @@ export const products: Product[] = [
       unsplash("photo-1624378439575-d8705ad7ae80"),
       unsplash("photo-1584865288642-42078afe6942"),
     ],
-    description: "Wide-leg pleated trouser in crinkle nylon. Elasticated back, welt pockets.",
+    description:
+      "Wide-leg pleated trouser in crinkle nylon. Elasticated back, welt pockets.",
     drop: "SS26",
   },
   {
@@ -190,7 +196,8 @@ export const products: Product[] = [
       unsplash("photo-1572635196237-14b3f281503f"),
       unsplash("photo-1511499767150-a48a237f0083"),
     ],
-    description: "Wrap-frame, CR-39 lenses, titanium hinge. Hard case included.",
+    description:
+      "Wrap-frame, CR-39 lenses, titanium hinge. Hard case included.",
     drop: "SS26",
   },
   {

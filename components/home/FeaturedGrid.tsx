@@ -61,7 +61,9 @@ export function FeaturedGrid() {
       <div className="container mx-auto">
         <div className="flex items-end justify-between mb-16">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-volt mb-3">/ Featured</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-3">
+              / Featured
+            </p>
             <h2 className="font-display text-5xl md:text-7xl tracking-tight leading-none">
               Core drop.
             </h2>
@@ -69,7 +71,7 @@ export function FeaturedGrid() {
           <Link
             href="/shop"
             data-cursor="view"
-            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-volt transition-colors border-b border-cream/30 hover:border-volt pb-1 hidden md:inline"
+            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-MARES transition-colors border-b border-cream/30 hover:border-MARES pb-1 hidden md:inline"
           >
             See all →
           </Link>
@@ -99,7 +101,9 @@ export function FeaturedGrid() {
               </div>
               <div className="fg-info flex items-start justify-between">
                 <div>
-                  <p className="font-display text-lg leading-none tracking-tight">{p.name}</p>
+                  <p className="font-display text-lg leading-none tracking-tight">
+                    {p.name}
+                  </p>
                   <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-1">
                     {p.subtitle}
                   </p>

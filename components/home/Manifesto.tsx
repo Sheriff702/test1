@@ -12,7 +12,9 @@ export function Manifesto() {
   useEffect(() => {
     if (!ref.current) return;
     const ctx = gsap.context(() => {
-      const target = ref.current!.querySelector(".manifesto-text") as HTMLElement;
+      const target = ref.current!.querySelector(
+        ".manifesto-text",
+      ) as HTMLElement;
       const split = new SplitText(target, { type: "words" });
 
       gsap.set(split.words, { opacity: 0.15 });
@@ -35,13 +37,10 @@ export function Manifesto() {
   }, []);
 
   return (
-    <section
-      ref={ref}
-      className="relative py-40 px-6 md:px-12 bg-ink"
-    >
+    <section ref={ref} className="relative py-40 px-6 md:px-12 bg-ink">
       <div className="container mx-auto grid md:grid-cols-12 gap-10">
         <div className="md:col-span-3">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-volt sticky top-32">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-MARES sticky top-32">
             / Manifesto
           </p>
         </div>

@@ -77,7 +77,7 @@ export function Lookbook() {
 
   return (
     <section ref={ref} className="relative h-screen overflow-hidden bg-ink">
-      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-volt">
+      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-MARES">
         / Lookbook SS26 — drag or scroll
       </div>
 

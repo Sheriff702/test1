@@ -5,7 +5,7 @@
 :root {
   --ink: #0a0a0a;
   --cream: #f4efe6;
-  --volt: #c6f24e;
+  --MARES: #c6f24e;
   --blood: #ff3b2e;
   --smoke: #1a1a1a;
 }
@@ -40,7 +40,7 @@ html.lenis body {
 }
 
 ::selection {
-  background: var(--volt);
+  background: var(--MARES);
   color: var(--ink);
 }
 
@@ -58,12 +58,25 @@ html.lenis body {
 }
 
 @keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  30% { transform: translate(3%, -15%); }
-  50% { transform: translate(12%, 9%); }
-  70% { transform: translate(-7%, 3%); }
-  90% { transform: translate(6%, 15%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  30% {
+    transform: translate(3%, -15%);
+  }
+  50% {
+    transform: translate(12%, 9%);
+  }
+  70% {
+    transform: translate(-7%, 3%);
+  }
+  90% {
+    transform: translate(6%, 15%);
+  }
 }
 
 /* Text stroke utility */
@@ -100,11 +113,16 @@ html.has-cursor * {
 }
 
 /* Hide scrollbar but keep functional */
-::-webkit-scrollbar { width: 0; height: 0; }
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

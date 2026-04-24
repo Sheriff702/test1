@@ -76,19 +76,21 @@ export function Drops() {
               className="object-cover"
             />
           </div>
-          <span className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest bg-volt text-ink px-2 py-1">
+          <span className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest bg-MARES text-ink px-2 py-1">
             Drop 02
           </span>
         </div>
 
         <div className="drops-copy order-1 md:order-2">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-volt mb-4">/ Next drop</p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-4">
+            / Next drop
+          </p>
           <h2 className="drops-title font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8">
             SS26 / DROP 02
           </h2>
           <p className="text-lg text-cream/80 max-w-md mb-10 leading-snug">
-            Twelve pieces. Two hundred of each. Weatherproofed outerwear, deadstock
-            indigo, technical knits. Set your alarm.
+            Twelve pieces. Two hundred of each. Weatherproofed outerwear,
+            deadstock indigo, technical knits. Set your alarm.
           </p>
 
           <div className="grid grid-cols-4 gap-4 mb-10 max-w-md">
@@ -112,7 +114,7 @@ export function Drops() {
           <Link
             href="/shop"
             data-cursor="go"
-            className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-cream border-b border-cream pb-1 hover:text-volt hover:border-volt transition-colors"
+            className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-cream border-b border-cream pb-1 hover:text-MARES hover:border-MARES transition-colors"
           >
             Notify me <span>→</span>
           </Link>

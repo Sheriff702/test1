@@ -14,7 +14,9 @@ export function Hero() {
     if (!root.current) return;
 
     const ctx = gsap.context(() => {
-      const wordmark = root.current!.querySelector(".hero-wordmark") as HTMLElement;
+      const wordmark = root.current!.querySelector(
+        ".hero-wordmark",
+      ) as HTMLElement;
       const kicker = root.current!.querySelector(".hero-kicker") as HTMLElement;
       const subline = root.current!.querySelectorAll(".hero-subline");
       const bgImage = root.current!.querySelector(".hero-bg") as HTMLElement;
@@ -36,13 +38,17 @@ export function Hero() {
         0,
       )
         .from(kicker, { y: 30, opacity: 0, duration: 1 }, 0.2)
-        .to(split.chars, {
-          yPercent: 0,
-          opacity: 1,
-          rotation: 0,
-          stagger: { each: 0.06, from: "random" },
-          duration: 1.4,
-        }, 0.3)
+        .to(
+          split.chars,
+          {
+            yPercent: 0,
+            opacity: 1,
+            rotation: 0,
+            stagger: { each: 0.06, from: "random" },
+            duration: 1.4,
+          },
+          0.3,
+        )
         .fromTo(
           model,
           { yPercent: 40, opacity: 0, scale: 1.05 },
@@ -64,15 +70,23 @@ export function Hero() {
         scrub: 1,
         animation: gsap
           .timeline()
-          .to(split.chars, {
-            xPercent: (i, el, arr) => (i - (arr.length - 1) / 2) * 18,
-            yPercent: (i) => (i % 2 ? -6 : 6),
-            ease: "power2.out",
-          }, 0)
+          .to(
+            split.chars,
+            {
+              xPercent: (i, el, arr) => (i - (arr.length - 1) / 2) * 18,
+              yPercent: (i) => (i % 2 ? -6 : 6),
+              ease: "power2.out",
+            },
+            0,
+          )
           .to(bgImage, { scale: 1.15, ease: "none" }, 0)
           .to(model, { yPercent: -20, scale: 1.05, ease: "none" }, 0)
           .to(".hero-content", { opacity: 0, ease: "none" }, 0.3)
-          .to(root.current, { filter: "blur(6px)", scale: 1.05, ease: "none" }, 0.5),
+          .to(
+            root.current,
+            { filter: "blur(6px)", scale: 1.05, ease: "none" },
+            0.5,
+          ),
       });
 
       return () => split.revert();
@@ -103,12 +117,17 @@ export function Hero() {
       <div className="hero-model absolute right-0 bottom-0 top-0 w-[65%] md:w-[55%] lg:w-[48%] pointer-events-none will-change-transform">
         <Image
           src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=80"
-          alt="Model wearing VOLT"
+          alt="Model wearing MARES"
           fill
           priority
           sizes="(max-width: 768px) 65vw, 48vw"
           className="object-cover object-top grayscale contrast-125"
-          style={{ maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)" }}
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, black 70%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 70%, transparent 100%)",
+          }}
         />
       </div>
 
@@ -117,31 +136,34 @@ export function Hero() {
         {/* Top meta */}
         <div className="pt-32 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] uppercase tracking-widest text-cream/70">
           <span className="hero-meta-row flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-volt rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-MARES rounded-full animate-pulse" />
             Live / SS26 collection
           </span>
-          <span className="hero-meta-row hidden md:inline">N59°19′ / E18°04′</span>
+          <span className="hero-meta-row hidden md:inline">
+            N59°19′ / E18°04′
+          </span>
         </div>
 
         {/* Wordmark + subline */}
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
-          <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-volt mb-6">
+          <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-MARES mb-6">
             Chapter 01 — Urban Uniform
           </p>
           <h1 className="hero-wordmark font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference">
-            VOLT
+            MARES
           </h1>
           <div className="mt-10 max-w-xl">
             <p className="hero-subline text-lg md:text-xl text-cream/80 leading-snug">
               Streetwear, engineered.{" "}
-              <span className="text-volt">Built for the street,</span> cut for the body, tested in the rain.
+              <span className="text-MARES">Built for the street,</span> cut for
+              the body, tested in the rain.
             </p>
             <div className="hero-cta mt-10 flex items-center gap-6">
               <MagneticCTA href="/shop" label="Shop the drop" />
               <Link
                 href="/lookbook"
                 data-cursor="view"
-                className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-volt transition-colors border-b border-cream/30 hover:border-volt pb-1"
+                className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-MARES transition-colors border-b border-cream/30 hover:border-MARES pb-1"
               >
                 Lookbook SS26 →
               </Link>
