@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
 
-const TOKENS = ["NEW DROP", "SS26", "URBAN UNIFORM", "BUILT FOR THE STREET", "VOLT ✦"];
+const TOKENS = ["NEW DROP", "SS26", "URBAN UNIFORM", "BUILT FOR THE STREET", "MARES ✦"];
 
 export function HeroMarquee({ direction = 1, className }: { direction?: 1 | -1; className?: string }) {
   const rowRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export function HeroMarquee({ direction = 1, className }: { direction?: 1 | -1; 
                 className="font-display text-6xl md:text-8xl tracking-tight px-8 leading-none flex items-center gap-8"
               >
                 {t}
-                <span className="text-volt">/</span>
+                <span className="text-mares">/</span>
               </span>
             ))}
           </div>

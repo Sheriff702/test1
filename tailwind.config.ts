@@ -12,7 +12,7 @@ const config: Config = {
       colors: {
         ink: "#0a0a0a",
         cream: "#f4efe6",
-        volt: "#c6f24e",
+        mares: "#c6f24e",
         blood: "#ff3b2e",
         smoke: "#1a1a1a",
         ash: "#2a2a2a",

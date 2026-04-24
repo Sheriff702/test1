@@ -75,7 +75,7 @@ export function ProductDetail({ product }: { product: Product }) {
         <Link
           href="/shop"
           data-cursor="back"
-          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-cream/60 hover:text-volt transition-colors mb-8"
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-cream/60 hover:text-mares transition-colors mb-8"
         >
           <span>←</span> Back to shop
         </Link>
@@ -111,7 +111,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
           <div className="pd-side lg:sticky lg:top-28 lg:self-start space-y-8">
             <div className="pd-meta">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-volt mb-3">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">
                 {product.subtitle}
               </p>
               <h1 className="pd-title font-display text-5xl md:text-7xl tracking-tight leading-none">
@@ -174,11 +174,11 @@ export function ProductDetail({ product }: { product: Product }) {
             <button
               onClick={addToCart}
               data-cursor="add"
-              className="pd-add group w-full relative overflow-hidden bg-volt text-ink font-display tracking-tight text-xl py-5 rounded-full"
+              className="pd-add group w-full relative overflow-hidden bg-mares text-ink font-display tracking-tight text-xl py-5 rounded-full"
             >
               <span className="relative z-10">Add to cart — {product.currency}{product.price}</span>
               <span className="absolute inset-0 bg-ink scale-y-0 origin-bottom transition-transform duration-500 ease-expo group-hover:scale-y-100" />
-              <span className="absolute inset-0 flex items-center justify-center text-volt opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-expo">
+              <span className="absolute inset-0 flex items-center justify-center text-mares opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-expo">
                 Secure the piece →
               </span>
             </button>

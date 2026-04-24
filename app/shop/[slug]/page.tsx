@@ -15,7 +15,7 @@ export async function generateMetadata({
   const product = getProduct(slug);
   if (!product) return {};
   return {
-    title: `${product.name} — VOLT`,
+    title: `${product.name} — MARES`,
     description: product.description,
   };
 }
