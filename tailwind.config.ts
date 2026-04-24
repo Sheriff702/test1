@@ -10,13 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0a0a0a",
-        cream: "#f4efe6",
-        volt: "#c6f24e",
-        blood: "#ff3b2e",
-        smoke: "#1a1a1a",
-        ash: "#2a2a2a",
-        bone: "#e8e2d4",
+        ink: "rgb(var(--color-ink) / <alpha-value>)",
+        cream: "rgb(var(--color-cream) / <alpha-value>)",
+        mares: "rgb(var(--color-mares) / <alpha-value>)",
+        blood: "rgb(var(--color-blood) / <alpha-value>)",
+        smoke: "rgb(var(--color-smoke) / <alpha-value>)",
+        ash: "rgb(var(--color-ash) / <alpha-value>)",
+        bone: "rgb(var(--color-bone) / <alpha-value>)",
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],

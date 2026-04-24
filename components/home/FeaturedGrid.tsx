@@ -3,54 +3,33 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { products } from "@/lib/products";
+import { usePreferences } from "@/lib/preferences";
 
 export function FeaturedGrid() {
   const ref = useRef<HTMLElement>(null);
   const featured = products.slice(0, 4);
+  const { t } = usePreferences();
 
   useEffect(() => {
     if (!ref.current) return;
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".fg-card");
-      cards.forEach((card, i) => {
+      cards.forEach((card) => {
         const img = card.querySelector(".fg-img");
-        const info = card.querySelector(".fg-info");
-        gsap.fromTo(
-          card,
-          { yPercent: 20, opacity: 0 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: "expo.out",
-            scrollTrigger: { trigger: card, start: "top 85%" },
-          },
-        );
-        gsap.fromTo(
-          img,
-          { scale: 1.25, clipPath: "inset(0 0 100% 0)" },
-          {
-            scale: 1,
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1.4,
-            ease: "expo.out",
-            scrollTrigger: { trigger: card, start: "top 80%" },
-          },
-        );
-        gsap.fromTo(
-          info,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            delay: 0.2,
-            ease: "expo.out",
-            scrollTrigger: { trigger: card, start: "top 80%" },
-          },
-        );
+        gsap.from(card, {
+          y: 40,
+          duration: 1.1,
+          ease: "expo.out",
+          scrollTrigger: { trigger: card, start: "top 95%", once: true },
+        });
+        gsap.from(img, {
+          scale: 1.15,
+          duration: 1.4,
+          ease: "expo.out",
+          scrollTrigger: { trigger: card, start: "top 95%", once: true },
+        });
       });
     }, ref);
     return () => ctx.revert();
@@ -61,17 +40,19 @@ export function FeaturedGrid() {
       <div className="container mx-auto">
         <div className="flex items-end justify-between mb-16">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-volt mb-3">/ Featured</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">
+              {t("featured")}
+            </p>
             <h2 className="font-display text-5xl md:text-7xl tracking-tight leading-none">
-              Core drop.
+              {t("coreDrop")}
             </h2>
           </div>
           <Link
             href="/shop"
             data-cursor="view"
-            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-volt transition-colors border-b border-cream/30 hover:border-volt pb-1 hidden md:inline"
+            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors border-b border-cream/30 hover:border-mares pb-1 hidden md:inline"
           >
-            See all →
+            {t("seeAll")}
           </Link>
         </div>
 
@@ -99,7 +80,9 @@ export function FeaturedGrid() {
               </div>
               <div className="fg-info flex items-start justify-between">
                 <div>
-                  <p className="font-display text-lg leading-none tracking-tight">{p.name}</p>
+                  <p className="font-display text-lg leading-none tracking-tight">
+                    {p.name}
+                  </p>
                   <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-1">
                     {p.subtitle}
                   </p>

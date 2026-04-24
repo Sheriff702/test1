@@ -7,21 +7,15 @@ import { gsap } from "@/lib/gsap";
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const curtainRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const first = useRef(true);
 
   useEffect(() => {
-    const curtain = curtainRef.current!;
-    const content = contentRef.current!;
+    const curtain = curtainRef.current;
+    if (!curtain) return;
 
     if (first.current) {
       first.current = false;
       gsap.set(curtain, { yPercent: -100 });
-      gsap.fromTo(
-        content,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "expo.out", delay: 0.1 },
-      );
       return;
     }
 
@@ -29,26 +23,27 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     tl.fromTo(
       curtain,
       { yPercent: 100 },
-      { yPercent: 0, duration: 0.7, ease: "expo.inOut" },
-    )
-      .set(content, { opacity: 0, y: 20 })
-      .to(curtain, {
-        yPercent: -100,
-        duration: 0.7,
-        ease: "expo.inOut",
-      })
-      .to(content, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, "-=0.5");
+      { yPercent: 0, duration: 0.6, ease: "expo.inOut" },
+    ).to(curtain, {
+      yPercent: -100,
+      duration: 0.6,
+      ease: "expo.inOut",
+    });
   }, [pathname]);
 
   return (
     <>
       <div
         ref={curtainRef}
+        aria-hidden
         className="fixed inset-0 z-[150] bg-ink pointer-events-none flex items-center justify-center"
+        style={{ transform: "translateY(-100%)" }}
       >
-        <span className="font-display text-volt text-6xl tracking-tight">VOLT</span>
+        <span className="font-display text-mares text-6xl tracking-tight">
+          MARES
+        </span>
       </div>
-      <div ref={contentRef}>{children}</div>
+      {children}
     </>
   );
 }

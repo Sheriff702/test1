@@ -12,7 +12,7 @@ export default function HomePage() {
       <Manifesto />
       <FeaturedGrid />
       <Lookbook />
-      <div className="py-12 border-y border-cream/10 bg-smoke">
+      <div className="py-12 z-50 border-y border-cream/10 bg-smoke">
         <HeroMarquee direction={-1} />
       </div>
       <Drops />

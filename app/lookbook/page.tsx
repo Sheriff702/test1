@@ -1,8 +1,8 @@
 import { LookbookStory } from "@/components/lookbook/LookbookStory";
 
 export const metadata = {
-  title: "Lookbook SS26 — VOLT",
-  description: "Chapter by chapter — the SS26 lookbook.",
+  title: "Lookbook — MARES",
+  description: "Chapter by chapter — the MARES lookbook.",
 };
 
 export default function LookbookPage() {

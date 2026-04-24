@@ -5,8 +5,18 @@ import Image from "next/image";
 import { useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import type { Product } from "@/lib/products";
+import { usePreferences } from "@/lib/preferences";
+
+const CAT_KEY: Record<Product["category"], string> = {
+  outerwear: "catOuterwear",
+  tops: "catTops",
+  bottoms: "catBottoms",
+  footwear: "catFootwear",
+  accessories: "catAccessories",
+};
 
 export function ProductCard({ product }: { product: Product }) {
+  const { t } = usePreferences();
   const ref = useRef<HTMLAnchorElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
 
@@ -69,7 +79,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div>
           <p className="font-display text-lg leading-none tracking-tight">{product.name}</p>
           <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-1">
-            {product.subtitle}
+            {t(CAT_KEY[product.category] as "catOuterwear")}
           </p>
         </div>
         <p className="font-mono text-sm text-cream">

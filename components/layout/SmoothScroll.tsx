@@ -25,7 +25,14 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
+    // Refresh ScrollTrigger after fonts/images settle so pin positions are correct
+    const refresh = () => ScrollTrigger.refresh();
+    const id = window.setTimeout(refresh, 200);
+    window.addEventListener("load", refresh);
+
     return () => {
+      window.clearTimeout(id);
+      window.removeEventListener("load", refresh);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };

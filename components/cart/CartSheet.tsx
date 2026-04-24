@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { useCart } from "@/lib/cart";
+import { cn } from "@/lib/utils";
+import { usePreferences } from "@/lib/preferences";
 
 export function CartSheet() {
   const isOpen = useCart((s) => s.isOpen);
@@ -11,26 +13,9 @@ export function CartSheet() {
   const items = useCart((s) => s.items);
   const total = useCart((s) => s.total());
   const remove = useCart((s) => s.remove);
+  const { t } = usePreferences();
 
-  const panelRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
   const totalRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (!panelRef.current || !backdropRef.current) return;
-    if (isOpen) {
-      gsap.to(backdropRef.current, { opacity: 1, pointerEvents: "auto", duration: 0.4 });
-      gsap.to(panelRef.current, { xPercent: 0, duration: 0.7, ease: "expo.out" });
-      gsap.fromTo(
-        ".cart-line",
-        { x: 40, opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.06, duration: 0.7, ease: "expo.out", delay: 0.2 },
-      );
-    } else {
-      gsap.to(backdropRef.current, { opacity: 0, pointerEvents: "none", duration: 0.3 });
-      gsap.to(panelRef.current, { xPercent: 100, duration: 0.6, ease: "expo.in" });
-    }
-  }, [isOpen, items.length]);
 
   useEffect(() => {
     if (!totalRef.current) return;
@@ -53,39 +38,47 @@ export function CartSheet() {
   return (
     <>
       <div
-        ref={backdropRef}
         onClick={close}
-        className="fixed inset-0 bg-ink/70 backdrop-blur-sm z-[120] opacity-0 pointer-events-none"
+        className={cn(
+          "fixed inset-0 bg-ink/70 backdrop-blur-sm z-[120] transition-opacity duration-300",
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+        )}
       />
       <aside
-        ref={panelRef}
-        className="fixed top-0 right-0 bottom-0 w-full sm:w-[440px] bg-smoke border-l border-cream/10 z-[121] translate-x-full flex flex-col"
-        style={{ transform: "translateX(100%)" }}
+        className={cn(
+          "fixed top-0 right-0 bottom-0 w-full sm:w-[440px] bg-smoke border-l border-cream/10 z-[121] flex flex-col will-change-transform transition-transform duration-500 ease-out",
+          isOpen ? "translate-x-0" : "translate-x-full",
+        )}
       >
         <header className="flex items-center justify-between p-6 border-b border-cream/10">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-volt mb-1">
-              / Cart
+            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-1">
+              {t("cartLabel")}
             </p>
             <h2 className="font-display text-3xl tracking-tight leading-none">
-              Your bag
+              {t("yourBag")}
             </h2>
           </div>
           <button
             onClick={close}
             data-cursor="close"
-            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-volt transition-colors"
+            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors"
           >
-            Close ×
+            {t("closeMark")}
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-6" data-lenis-prevent>
+        <div
+          className="flex-1 overflow-y-auto p-6 space-y-6"
+          data-lenis-prevent
+        >
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center py-20">
-              <p className="font-display text-4xl tracking-tight mb-3">Empty.</p>
+              <p className="font-display text-4xl tracking-tight mb-3">
+                {t("empty")}
+              </p>
               <p className="text-cream/60 text-sm max-w-xs">
-                Nothing selected yet. The drop won&apos;t wait.
+                {t("emptyHint")}
               </p>
             </div>
           ) : (
@@ -95,7 +88,13 @@ export function CartSheet() {
                 className="cart-line flex gap-4"
               >
                 <div className="relative w-24 aspect-[3/4] bg-ink overflow-hidden shrink-0">
-                  <Image src={item.image} alt={item.name} fill sizes="96px" className="object-cover" />
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="flex-1 min-w-0 flex flex-col justify-between">
                   <div>
@@ -116,7 +115,7 @@ export function CartSheet() {
                       data-cursor="remove"
                       className="font-mono text-[10px] uppercase tracking-widest text-cream/50 hover:text-blood transition-colors"
                     >
-                      Remove
+                      {t("remove")}
                     </button>
                   </div>
                 </div>
@@ -128,7 +127,7 @@ export function CartSheet() {
         <footer className="border-t border-cream/10 p-6 space-y-4">
           <div className="flex items-center justify-between font-mono text-sm">
             <span className="uppercase tracking-widest text-cream/60 text-[10px]">
-              Subtotal
+              {t("subtotal")}
             </span>
             <span className="font-display text-2xl">
               €<span ref={totalRef}>0</span>
@@ -137,12 +136,12 @@ export function CartSheet() {
           <button
             disabled={items.length === 0}
             data-cursor="checkout"
-            className="w-full bg-volt text-ink font-display text-lg py-4 rounded-full disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full bg-mares text-ink font-display text-lg py-4 rounded-full disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Checkout →
+            {t("checkout")}
           </button>
           <p className="font-mono text-[10px] uppercase tracking-widest text-cream/40 text-center">
-            Demo — no real checkout
+            {t("demoNoCheckout")}
           </p>
         </footer>
       </aside>

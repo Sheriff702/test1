@@ -2,95 +2,82 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
+import { usePreferences } from "@/lib/preferences";
 
-const SLIDES = [
+const SLIDES_RAW = [
   {
-    src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-    title: "Chapter 01",
-    subtitle: "Concrete",
-    body: "Built for the freight elevator, the loading dock, the quiet minute before the night begins.",
+    src: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1600&q=80",
+    n: 1 as const,
   },
   {
-    src: "https://images.unsplash.com/photo-1488831295921-b4ed3d0e9a0a?auto=format&fit=crop&w=1600&q=80",
-    title: "Chapter 02",
-    subtitle: "Signal",
-    body: "Reflective tape, silent hardware, soft interior. Designed to disappear and reappear.",
+    src: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1600&q=80",
+    n: 2 as const,
   },
   {
     src: "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1600&q=80",
-    title: "Chapter 03",
-    subtitle: "Static",
-    body: "Heavyweight jersey, boxed shoulders, no logo. The uniform before it becomes a uniform.",
+    n: 3 as const,
   },
   {
-    src: "https://images.unsplash.com/photo-1520975922284-9d8e0f4c5c2b?auto=format&fit=crop&w=1600&q=80",
-    title: "Chapter 04",
-    subtitle: "Drift",
-    body: "Wide, soft, weatherproof. For the walk home at 3AM when the city finally belongs to you.",
+    src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
+    n: 4 as const,
   },
 ];
 
 export function Lookbook() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const { t } = usePreferences();
+  const SLIDES = SLIDES_RAW.map((s) => ({
+    src: s.src,
+    title: `${t("chapter")} 0${s.n}`,
+    subtitle: t(`lbHomeTitle${s.n}` as "lbHomeTitle1"),
+    body: t(`lbHomeBody${s.n}` as "lbHomeBody1"),
+  }));
 
   useEffect(() => {
     if (!ref.current || !trackRef.current) return;
     const ctx = gsap.context(() => {
       const track = trackRef.current!;
-      const distance = () => track.scrollWidth - window.innerWidth;
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
-      const st = ScrollTrigger.create({
-        trigger: ref.current,
-        start: "top top",
-        end: () => `+=${distance()}`,
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        animation: gsap.to(track, { x: () => -distance(), ease: "none" }),
+      gsap.to(track, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top top",
+          end: () => `+=${distance()}`,
+          pin: true,
+          pinSpacing: true,
+          pinType: "transform",
+          anticipatePin: 1,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
       });
-
-      // Active slide scaling
-      const slides = gsap.utils.toArray<HTMLElement>(".lb-slide");
-      slides.forEach((slide) => {
-        gsap.fromTo(
-          slide.querySelector(".lb-img"),
-          { scale: 0.9, filter: "grayscale(1) brightness(0.6)" },
-          {
-            scale: 1,
-            filter: "grayscale(0) brightness(1)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: slide,
-              containerAnimation: st.animation,
-              start: "left center",
-              end: "right center",
-              scrub: true,
-            },
-          },
-        );
-      });
-    }, ref);
+    }, wrapperRef);
     return () => ctx.revert();
   }, []);
 
   return (
+    <div ref={wrapperRef}>
     <section ref={ref} className="relative h-screen overflow-hidden bg-ink">
-      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-volt">
-        / Lookbook SS26 — drag or scroll
+      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-mares">
+        {t("lookbookLabel")}
       </div>
 
       <div
         ref={trackRef}
-        className="h-full flex items-center gap-8 md:gap-16 pl-6 md:pl-12 pr-[40vw] will-change-transform"
+        className="h-full flex items-stretch gap-6 md:gap-10 pt-20 pb-8 pl-6 md:pl-12 pr-[20vw] will-change-transform"
       >
         {SLIDES.map((s, i) => (
           <div
             key={i}
-            className="lb-slide shrink-0 w-[70vw] md:w-[45vw] lg:w-[35vw] h-[70vh] relative flex flex-col justify-end"
+            className="lb-slide shrink-0 w-[70vw] md:w-[45vw] lg:w-[35vw] relative flex flex-col justify-end"
           >
-            <div className="lb-img absolute inset-0 overflow-hidden will-change-transform">
+            <div className="lb-img absolute inset-0 overflow-hidden">
               <Image
                 src={s.src}
                 alt={s.title}
@@ -116,5 +103,6 @@ export function Lookbook() {
         ))}
       </div>
     </section>
+    </div>
   );
 }
