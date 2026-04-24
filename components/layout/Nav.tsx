@@ -28,16 +28,6 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -40,
-      opacity: 0,
-      duration: 1.2,
-      delay: 0.6,
-      ease: "expo.out",
-    });
-  }, []);
-
   return (
     <header
       ref={navRef}
@@ -54,7 +44,7 @@ export function Nav() {
           data-cursor="home"
           className="font-display text-2xl tracking-tight leading-none"
         >
-          MARES<span className="text-MARES">.</span>
+          MARES<span className="text-mares">.</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">
@@ -69,7 +59,7 @@ export function Nav() {
           className="font-mono text-xs uppercase tracking-widest flex items-center gap-2 group"
         >
           <span>Cart</span>
-          <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-MARES group-hover:text-ink group-hover:border-MARES transition-colors">
+          <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-mares group-hover:text-ink group-hover:border-mares transition-colors">
             {mounted ? count : 0}
           </span>
         </button>
@@ -106,7 +96,7 @@ function MagneticLink({ href, label }: { href: string; label: string }) {
       ref={ref}
       href={href}
       data-cursor="view"
-      className="relative font-mono text-xs uppercase tracking-widest text-cream/80 hover:text-cream transition-colors after:absolute after:left-0 after:-bottom-1 after:w-full after:h-px after:bg-MARES after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-500 after:ease-expo inline-block"
+      className="relative font-mono text-xs uppercase tracking-widest text-cream/80 hover:text-cream transition-colors after:absolute after:left-0 after:-bottom-1 after:w-full after:h-px after:bg-mares after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-500 after:ease-expo inline-block"
     >
       {label}
     </Link>

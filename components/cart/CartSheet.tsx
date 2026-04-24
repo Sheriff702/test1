@@ -87,7 +87,7 @@ export function CartSheet() {
       >
         <header className="flex items-center justify-between p-6 border-b border-cream/10">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-1">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-1">
               / Cart
             </p>
             <h2 className="font-display text-3xl tracking-tight leading-none">
@@ -97,7 +97,7 @@ export function CartSheet() {
           <button
             onClick={close}
             data-cursor="close"
-            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-MARES transition-colors"
+            className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors"
           >
             Close ×
           </button>
@@ -171,7 +171,7 @@ export function CartSheet() {
           <button
             disabled={items.length === 0}
             data-cursor="checkout"
-            className="w-full bg-MARES text-ink font-display text-lg py-4 rounded-full disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full bg-mares text-ink font-display text-lg py-4 rounded-full disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Checkout →
           </button>

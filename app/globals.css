@@ -5,7 +5,7 @@
 :root {
   --ink: #0a0a0a;
   --cream: #f4efe6;
-  --MARES: #c6f24e;
+  --mares: #c6f24e;
   --blood: #ff3b2e;
   --smoke: #1a1a1a;
 }
@@ -40,7 +40,7 @@ html.lenis body {
 }
 
 ::selection {
-  background: var(--MARES);
+  background: var(--mares);
   color: var(--ink);
 }
 

@@ -74,7 +74,7 @@ export const products: Product[] = [
     price: 79,
     currency: "€",
     category: "tops",
-    colors: ["Ink", "Bone", "MARES"],
+    colors: ["Ink", "Bone", "Mares"],
     sizes: ["XS", "S", "M", "L", "XL"],
     images: [
       unsplash("photo-1583743814966-8936f5b7be1a"),
@@ -91,7 +91,7 @@ export const products: Product[] = [
     price: 349,
     currency: "€",
     category: "footwear",
-    colors: ["Bone", "MARES"],
+    colors: ["Bone", "Mares"],
     sizes: ["40", "41", "42", "43", "44", "45"],
     images: [
       unsplash("photo-1542291026-7eec264c27ff"),
@@ -151,13 +151,13 @@ export const products: Product[] = [
     drop: "CORE",
   },
   {
-    slug: "MARES-beanie",
-    name: "MARES Beanie",
+    slug: "mares-beanie",
+    name: "Mares Beanie",
     subtitle: "Core / Accessories",
     price: 49,
     currency: "€",
     category: "accessories",
-    colors: ["MARES", "Ink"],
+    colors: ["Mares", "Ink"],
     sizes: ["One Size"],
     images: [
       unsplash("photo-1578920024129-1c96e94a17d1"),

@@ -17,7 +17,7 @@ export function Manifesto() {
       ) as HTMLElement;
       const split = new SplitText(target, { type: "words" });
 
-      gsap.set(split.words, { opacity: 0.15 });
+      gsap.set(split.words, { opacity: 0.35 });
 
       gsap.to(split.words, {
         opacity: 1,
@@ -25,8 +25,8 @@ export function Manifesto() {
         ease: "none",
         scrollTrigger: {
           trigger: ref.current,
-          start: "top 70%",
-          end: "bottom 70%",
+          start: "top 80%",
+          end: "center 40%",
           scrub: true,
         },
       });
@@ -40,7 +40,7 @@ export function Manifesto() {
     <section ref={ref} className="relative py-40 px-6 md:px-12 bg-ink">
       <div className="container mx-auto grid md:grid-cols-12 gap-10">
         <div className="md:col-span-3">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-MARES sticky top-32">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-mares sticky top-32">
             / Manifesto
           </p>
         </div>

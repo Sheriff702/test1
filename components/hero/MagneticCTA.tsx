@@ -54,7 +54,7 @@ export function MagneticCTA({ href, label }: { href: string; label: string }) {
         ref={btnRef}
         href={href}
         data-cursor="go"
-        className="group inline-flex items-center gap-4 px-8 py-4 rounded-full bg-MARES text-ink font-display tracking-tight text-lg relative overflow-hidden"
+        className="group inline-flex items-center gap-4 px-8 py-4 rounded-full bg-mares text-ink font-display tracking-tight text-lg relative overflow-hidden"
       >
         <span
           ref={labelRef}
@@ -66,7 +66,7 @@ export function MagneticCTA({ href, label }: { href: string; label: string }) {
           </span>
         </span>
         <span className="absolute inset-0 bg-ink scale-y-0 origin-bottom transition-transform duration-500 ease-expo group-hover:scale-y-100" />
-        <span className="absolute inset-0 flex items-center justify-center gap-4 text-MARES opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-expo pointer-events-none">
+        <span className="absolute inset-0 flex items-center justify-center gap-4 text-mares opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-expo pointer-events-none">
           {label} →
         </span>
       </Link>

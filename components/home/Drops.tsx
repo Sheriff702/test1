@@ -28,23 +28,20 @@ export function Drops() {
   useEffect(() => {
     if (!ref.current) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".drops-img",
-        { clipPath: "inset(50% 50% 50% 50%)" },
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 1.8,
-          ease: "expo.out",
-          scrollTrigger: { trigger: ref.current, start: "top 70%" },
-        },
-      );
+      gsap.from(".drops-img", {
+        scale: 1.15,
+        opacity: 0,
+        duration: 1.6,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
+      });
       gsap.from(".drops-copy > *", {
         y: 40,
         opacity: 0,
         stagger: 0.12,
         duration: 1,
         ease: "expo.out",
-        scrollTrigger: { trigger: ref.current, start: "top 70%" },
+        scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
       });
       gsap.to(".drops-title", {
         scrambleText: {
@@ -54,7 +51,7 @@ export function Drops() {
         },
         duration: 2,
         ease: "none",
-        scrollTrigger: { trigger: ref.current, start: "top 80%" },
+        scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
       });
     }, ref);
     return () => ctx.revert();
@@ -76,15 +73,13 @@ export function Drops() {
               className="object-cover"
             />
           </div>
-          <span className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest bg-MARES text-ink px-2 py-1">
+          <span className="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest bg-mares text-ink px-2 py-1">
             Drop 02
           </span>
         </div>
 
         <div className="drops-copy order-1 md:order-2">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-4">
-            / Next drop
-          </p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">/ Next drop</p>
           <h2 className="drops-title font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8">
             SS26 / DROP 02
           </h2>
@@ -114,7 +109,7 @@ export function Drops() {
           <Link
             href="/shop"
             data-cursor="go"
-            className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-cream border-b border-cream pb-1 hover:text-MARES hover:border-MARES transition-colors"
+            className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-cream border-b border-cream pb-1 hover:text-mares hover:border-mares transition-colors"
           >
             Notify me <span>→</span>
           </Link>

@@ -69,7 +69,7 @@ export function AboutContent() {
   return (
     <div ref={ref} className="pt-32 pb-20">
       <div className="container mx-auto px-6 md:px-12">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-4">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">
           / Studio
         </p>
         <h1 className="about-title font-display text-7xl md:text-10xl tracking-tighter leading-[0.85] max-w-5xl">
@@ -90,9 +90,9 @@ export function AboutContent() {
           </div>
           <div className="md:col-span-7 space-y-8 text-lg leading-relaxed text-cream/80">
             <p>
-              MARES is a small studio between Stockholm and Berlin. We design
-              technical streetwear in limited runs — twelve pieces per season,
-              two hundred of each, no restocks.
+              MARES is a small studio between Stockholm and Berlin. We design technical
+              streetwear in limited runs — twelve pieces per season, two hundred of
+              each, no restocks.
             </p>
             <p>
               Every garment gets a winter, a summer, a rainy autumn, and at
@@ -109,11 +109,8 @@ export function AboutContent() {
 
         <div className="about-values mt-40 grid md:grid-cols-4 gap-10">
           {VALUES.map((v) => (
-            <div
-              key={v.n}
-              className="about-value border-t border-cream/20 pt-4"
-            >
-              <p className="font-mono text-xs uppercase tracking-widest text-MARES mb-6">
+            <div key={v.n} className="about-value border-t border-cream/20 pt-4">
+              <p className="font-mono text-xs uppercase tracking-widest text-mares mb-6">
                 {v.n}
               </p>
               <h3 className="font-display text-3xl tracking-tight leading-tight mb-3">

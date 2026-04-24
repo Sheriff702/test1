@@ -84,7 +84,7 @@ export function LookbookStory() {
     <div ref={ref}>
       <section className="pt-40 pb-20 px-6 md:px-12">
         <div className="container mx-auto">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-MARES mb-4">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">
             / Lookbook SS26
           </p>
           <h1 className="lb-hero-title font-display text-7xl md:text-11xl tracking-tighter leading-[0.8]">
@@ -114,10 +114,8 @@ export function LookbookStory() {
                 />
               </div>
             </div>
-            <div
-              className={`lb-chapter-text md:col-span-5 ${i % 2 ? "md:order-1" : ""} space-y-4`}
-            >
-              <p className="font-mono text-[10px] uppercase tracking-widest text-MARES">
+            <div className={`lb-chapter-text md:col-span-5 ${i % 2 ? "md:order-1" : ""} space-y-4`}>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-mares">
                 Chapter {c.n}
               </p>
               <h2 className="font-display text-6xl md:text-8xl tracking-tighter leading-none">

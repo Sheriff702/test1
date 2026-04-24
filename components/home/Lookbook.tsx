@@ -51,15 +51,14 @@ export function Lookbook() {
         animation: gsap.to(track, { x: () => -distance(), ease: "none" }),
       });
 
-      // Active slide scaling
+      // Active slide subtle scale on focus
       const slides = gsap.utils.toArray<HTMLElement>(".lb-slide");
       slides.forEach((slide) => {
         gsap.fromTo(
           slide.querySelector(".lb-img"),
-          { scale: 0.9, filter: "grayscale(1) brightness(0.6)" },
+          { scale: 0.95 },
           {
             scale: 1,
-            filter: "grayscale(0) brightness(1)",
             ease: "none",
             scrollTrigger: {
               trigger: slide,
@@ -77,7 +76,7 @@ export function Lookbook() {
 
   return (
     <section ref={ref} className="relative h-screen overflow-hidden bg-ink">
-      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-MARES">
+      <div className="absolute top-8 left-6 md:left-12 z-10 font-mono text-[10px] uppercase tracking-widest text-mares">
         / Lookbook SS26 — drag or scroll
       </div>
 

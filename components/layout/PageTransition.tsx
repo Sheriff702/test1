@@ -49,10 +49,9 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       <div
         ref={curtainRef}
         className="fixed inset-0 z-[150] bg-ink pointer-events-none flex items-center justify-center"
+        style={{ transform: "translateY(-100%)" }}
       >
-        <span className="font-display text-MARES text-6xl tracking-tight">
-          MARES
-        </span>
+        <span className="font-display text-mares text-6xl tracking-tight">MARES</span>
       </div>
       <div ref={contentRef}>{children}</div>
     </>

@@ -69,7 +69,7 @@ export function ShopGrid() {
               className={cn(
                 "shrink-0 font-mono text-xs uppercase tracking-widest px-4 py-2 border rounded-full transition-colors",
                 active === c.slug
-                  ? "bg-MARES text-ink border-MARES"
+                  ? "bg-mares text-ink border-mares"
                   : "border-cream/20 text-cream/80 hover:border-cream/60 hover:text-cream",
               )}
             >

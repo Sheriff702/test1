@@ -27,6 +27,7 @@ export function Hero() {
 
       // Split the giant wordmark
       const split = new SplitText(wordmark, { type: "chars" });
+      gsap.set(wordmark, { visibility: "visible" });
       gsap.set(split.chars, { yPercent: 120, opacity: 0, rotation: 8 });
 
       // Intro timeline
@@ -136,7 +137,7 @@ export function Hero() {
         {/* Top meta */}
         <div className="pt-32 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] uppercase tracking-widest text-cream/70">
           <span className="hero-meta-row flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-MARES rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-mares rounded-full animate-pulse" />
             Live / SS26 collection
           </span>
           <span className="hero-meta-row hidden md:inline">
@@ -146,24 +147,26 @@ export function Hero() {
 
         {/* Wordmark + subline */}
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
-          <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-MARES mb-6">
+          <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-mares mb-6">
             Chapter 01 — Urban Uniform
           </p>
-          <h1 className="hero-wordmark font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference">
+          <h1
+            className="hero-wordmark font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference"
+            style={{ visibility: "hidden" }}
+          >
             MARES
           </h1>
           <div className="mt-10 max-w-xl">
             <p className="hero-subline text-lg md:text-xl text-cream/80 leading-snug">
               Streetwear, engineered.{" "}
-              <span className="text-MARES">Built for the street,</span> cut for
-              the body, tested in the rain.
+              <span className="text-mares">Built for the street,</span> cut for the body, tested in the rain.
             </p>
             <div className="hero-cta mt-10 flex items-center gap-6">
               <MagneticCTA href="/shop" label="Shop the drop" />
               <Link
                 href="/lookbook"
                 data-cursor="view"
-                className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-MARES transition-colors border-b border-cream/30 hover:border-MARES pb-1"
+                className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors border-b border-cream/30 hover:border-mares pb-1"
               >
                 Lookbook SS26 →
               </Link>
