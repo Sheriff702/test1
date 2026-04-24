@@ -3,16 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
+import { gsap, SplitText } from "@/lib/gsap";
 import { HeroMarquee } from "./HeroMarquee";
 import { MagneticCTA } from "./MagneticCTA";
+import { usePreferences } from "@/lib/preferences";
 
 export function Hero() {
   const root = useRef<HTMLElement>(null);
+  const { t } = usePreferences();
 
   useEffect(() => {
     if (!root.current) return;
 
+    let split: SplitText | null = null;
     const ctx = gsap.context(() => {
       const wordmark = root.current!.querySelector(
         ".hero-wordmark",
@@ -25,8 +28,7 @@ export function Hero() {
       const meta = root.current!.querySelectorAll(".hero-meta-row");
       const hint = root.current!.querySelector(".hero-hint") as HTMLElement;
 
-      // Split the giant wordmark
-      const split = new SplitText(wordmark, { type: "chars" });
+      split = new SplitText(wordmark, { type: "chars" });
       gsap.set(wordmark, { visibility: "visible" });
       gsap.set(split.chars, { yPercent: 120, opacity: 0, rotation: 8 });
 
@@ -60,40 +62,12 @@ export function Hero() {
         .from(cta, { y: 30, opacity: 0, duration: 1 }, 1.1)
         .from(meta, { opacity: 0, y: 10, stagger: 0.08, duration: 0.8 }, 1.2)
         .from(hint, { opacity: 0, y: 10, duration: 0.8 }, 1.4);
-
-      // Scroll-driven: pin, letters spread, model parallax, blur-out handoff
-      ScrollTrigger.create({
-        trigger: root.current,
-        start: "top top",
-        end: "+=120%",
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        animation: gsap
-          .timeline()
-          .to(
-            split.chars,
-            {
-              xPercent: (i, el, arr) => (i - (arr.length - 1) / 2) * 18,
-              yPercent: (i) => (i % 2 ? -6 : 6),
-              ease: "power2.out",
-            },
-            0,
-          )
-          .to(bgImage, { scale: 1.15, ease: "none" }, 0)
-          .to(model, { yPercent: -20, scale: 1.05, ease: "none" }, 0)
-          .to(".hero-content", { opacity: 0, ease: "none" }, 0.3)
-          .to(
-            root.current,
-            { filter: "blur(6px)", scale: 1.05, ease: "none" },
-            0.5,
-          ),
-      });
-
-      return () => split.revert();
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      split?.revert();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -104,7 +78,7 @@ export function Hero() {
       {/* Background image */}
       <div className="hero-bg absolute inset-0 will-change-transform">
         <Image
-          src="https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=2400&q=80"
+          src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1400&q=80"
           alt=""
           fill
           priority
@@ -117,7 +91,7 @@ export function Hero() {
       {/* Foreground model */}
       <div className="hero-model absolute right-0 bottom-0 top-0 w-[65%] md:w-[55%] lg:w-[48%] pointer-events-none will-change-transform">
         <Image
-          src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=80"
+          src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2400&q=80"
           alt="Model wearing MARES"
           fill
           priority
@@ -138,7 +112,7 @@ export function Hero() {
         <div className="pt-32 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] uppercase tracking-widest text-cream/70">
           <span className="hero-meta-row flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-mares rounded-full animate-pulse" />
-            Live / SS26 collection
+            Live / {t("newCollection")}
           </span>
           <span className="hero-meta-row hidden md:inline">
             N59°19′ / E18°04′
@@ -148,27 +122,29 @@ export function Hero() {
         {/* Wordmark + subline */}
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
           <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-mares mb-6">
-            Chapter 01 — Urban Uniform
+            {t("heroKicker")}
           </p>
-          <h1
-            className="hero-wordmark font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference"
-            style={{ visibility: "hidden" }}
-          >
-            MARES
+          <h1 className="font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference">
+            <span
+              className="hero-wordmark inline-block"
+              style={{ visibility: "hidden" }}
+            >
+              MARES
+            </span>
           </h1>
           <div className="mt-10 max-w-xl">
             <p className="hero-subline text-lg md:text-xl text-cream/80 leading-snug">
-              Streetwear, engineered.{" "}
-              <span className="text-mares">Built for the street,</span> cut for the body, tested in the rain.
+              {t("subPart1")}{" "}
+              <span className="text-mares">{t("subPart2")}</span> {t("subPart3")}
             </p>
             <div className="hero-cta mt-10 flex items-center gap-6">
-              <MagneticCTA href="/shop" label="Shop the drop" />
+              <MagneticCTA href="/shop" label={t("shopTheDrop")} />
               <Link
                 href="/lookbook"
                 data-cursor="view"
                 className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors border-b border-cream/30 hover:border-mares pb-1"
               >
-                Lookbook SS26 →
+                {t("seeLookbook")}
               </Link>
             </div>
           </div>
@@ -177,7 +153,7 @@ export function Hero() {
         {/* Scroll hint */}
         <div className="hero-hint absolute bottom-28 left-6 md:left-12 font-mono text-[10px] uppercase tracking-widest text-cream/60 flex items-center gap-3">
           <span className="block w-10 h-px bg-cream/40" />
-          Scroll to enter
+          {t("scrollToEnter")}
         </div>
       </div>
 

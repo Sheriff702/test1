@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
+import { gsap, SplitText } from "@/lib/gsap";
 import { useCart } from "@/lib/cart";
 import type { Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
+import { usePreferences } from "@/lib/preferences";
 
 export function ProductDetail({ product }: { product: Product }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -15,12 +16,14 @@ export function ProductDetail({ product }: { product: Product }) {
     product.sizes[Math.floor(product.sizes.length / 2)],
   );
   const [color, setColor] = useState(product.colors[0]);
+  const { t } = usePreferences();
 
   useEffect(() => {
     if (!ref.current) return;
+    let split: SplitText | null = null;
     const ctx = gsap.context(() => {
       const title = ref.current!.querySelector(".pd-title") as HTMLElement;
-      const split = new SplitText(title, { type: "chars" });
+      split = new SplitText(title, { type: "chars" });
       gsap.from(split.chars, {
         yPercent: 120,
         opacity: 0,
@@ -63,9 +66,11 @@ export function ProductDetail({ product }: { product: Product }) {
         duration: 1,
         ease: "expo.out",
       });
-      return () => split.revert();
     }, ref);
-    return () => ctx.revert();
+    return () => {
+      split?.revert();
+      ctx.revert();
+    };
   }, []);
 
   const addToCart = () => {
@@ -91,7 +96,7 @@ export function ProductDetail({ product }: { product: Product }) {
           data-cursor="back"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-cream/60 hover:text-mares transition-colors mb-8"
         >
-          <span>←</span> Back to shop
+          <span>←</span> {t("backToShop")}
         </Link>
 
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-20">
@@ -141,10 +146,12 @@ export function ProductDetail({ product }: { product: Product }) {
           <div className="pd-side lg:sticky lg:top-28 lg:self-start space-y-8">
             <div className="pd-meta">
               <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">
-                {product.subtitle}
+                {t(
+                  `cat${product.category.charAt(0).toUpperCase()}${product.category.slice(1)}` as "catOuterwear",
+                )}
               </p>
-              <h1 className="pd-title font-display text-5xl md:text-7xl tracking-tight leading-none">
-                {product.name}
+              <h1 className="font-display text-5xl md:text-7xl tracking-tight leading-none">
+                <span className="pd-title inline-block">{product.name}</span>
               </h1>
               <p className="font-mono text-xl text-cream mt-4">
                 {product.currency}
@@ -158,7 +165,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mb-3">
-                Color
+                {t("color")}
               </p>
               <div className="flex gap-2">
                 {product.colors.map((c) => (
@@ -181,7 +188,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mb-3">
-                Size
+                {t("size")}
               </p>
               <div className="flex gap-2 flex-wrap">
                 {product.sizes.map((s) => (
@@ -207,24 +214,24 @@ export function ProductDetail({ product }: { product: Product }) {
               data-cursor="add"
               className="pd-add group w-full relative overflow-hidden bg-mares text-ink font-display tracking-tight text-xl py-5 rounded-full"
             >
-              <span className="relative z-10">
-                Add to cart — {product.currency}
+              <span className="relative z-10 transition-opacity duration-300 ease-expo group-hover:opacity-0">
+                {t("addToCart")} — {product.currency}
                 {product.price}
               </span>
               <span className="absolute inset-0 bg-ink scale-y-0 origin-bottom transition-transform duration-500 ease-expo group-hover:scale-y-100" />
-              <span className="absolute inset-0 flex items-center justify-center text-mares opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-expo">
-                Secure the piece →
+              <span className="absolute inset-0 flex items-center justify-center text-mares opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-expo delay-150">
+                {t("securePiece")}
               </span>
             </button>
 
             <div className="grid grid-cols-2 gap-4 pt-6 border-t border-cream/10 font-mono text-[10px] uppercase tracking-widest text-cream/60">
               <div>
-                <p className="text-cream/40 mb-1">Shipping</p>
-                <p className="text-cream">Free over €250</p>
+                <p className="text-cream/40 mb-1">{t("shipping")}</p>
+                <p className="text-cream">{t("freeOver")}</p>
               </div>
               <div>
-                <p className="text-cream/40 mb-1">Returns</p>
-                <p className="text-cream">30 days, on us</p>
+                <p className="text-cream/40 mb-1">{t("returnsLabel")}</p>
+                <p className="text-cream">{t("returnsDays")}</p>
               </div>
             </div>
           </div>

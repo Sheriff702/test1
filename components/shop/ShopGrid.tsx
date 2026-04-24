@@ -5,13 +5,24 @@ import { gsap, Flip } from "@/lib/gsap";
 import { products, categories, type Product } from "@/lib/products";
 import { ProductCard } from "./ProductCard";
 import { cn } from "@/lib/utils";
+import { usePreferences } from "@/lib/preferences";
 
 type Cat = (typeof categories)[number]["slug"];
+
+const CAT_KEY: Record<(typeof categories)[number]["slug"], string> = {
+  all: "catAll",
+  outerwear: "catOuterwear",
+  tops: "catTops",
+  bottoms: "catBottoms",
+  footwear: "catFootwear",
+  accessories: "catAccessories",
+};
 
 export function ShopGrid() {
   const [active, setActive] = useState<Cat>("all");
   const gridRef = useRef<HTMLDivElement>(null);
-  const didMount = useRef(false);
+  const prevActive = useRef<Cat | null>(null);
+  const { t } = usePreferences();
 
   const filtered = useMemo<Product[]>(
     () =>
@@ -22,40 +33,37 @@ export function ShopGrid() {
   );
 
   useEffect(() => {
-    if (!didMount.current) {
-      didMount.current = true;
-      if (gridRef.current) {
-        const cards = gridRef.current.querySelectorAll(".product-card");
-        gsap.fromTo(
-          cards,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.06, duration: 1, ease: "expo.out" },
-        );
-      }
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".product-card");
+
+    if (prevActive.current === null) {
+      prevActive.current = active;
+      gsap.from(cards, {
+        y: 40,
+        stagger: 0.06,
+        duration: 0.9,
+        ease: "expo.out",
+      });
       return;
     }
-    if (!gridRef.current) return;
-    const state = Flip.getState(
-      gridRef.current.querySelectorAll(".product-card"),
-    );
-    // state captured AFTER re-render via rAF
+
+    if (prevActive.current === active) return;
+    prevActive.current = active;
+
+    const state = Flip.getState(cards);
     requestAnimationFrame(() => {
+      if (!gridRef.current) return;
       Flip.from(state, {
-        duration: 0.8,
+        duration: 0.6,
         ease: "expo.out",
         stagger: 0.03,
         absolute: true,
         onEnter: (els) =>
-          gsap.fromTo(
-            els,
-            { opacity: 0, scale: 0.9 },
-            { opacity: 1, scale: 1, duration: 0.6 },
-          ),
-        onLeave: (els) =>
-          gsap.to(els, { opacity: 0, scale: 0.9, duration: 0.3 }),
+          gsap.fromTo(els, { scale: 0.9 }, { scale: 1, duration: 0.5 }),
+        onLeave: (els) => gsap.to(els, { opacity: 0, duration: 0.25 }),
       });
     });
-  }, [filtered]);
+  }, [active]);
 
   return (
     <div>
@@ -73,11 +81,11 @@ export function ShopGrid() {
                   : "border-cream/20 text-cream/80 hover:border-cream/60 hover:text-cream",
               )}
             >
-              {c.label}
+              {t(CAT_KEY[c.slug] as "catAll")}
             </button>
           ))}
           <span className="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-widest text-cream/50">
-            {filtered.length} item{filtered.length !== 1 && "s"}
+            {filtered.length} {filtered.length === 1 ? t("item") : t("items")}
           </span>
         </div>
       </div>

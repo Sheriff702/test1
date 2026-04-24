@@ -3,11 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0a0a0a;
-  --cream: #f4efe6;
-  --mares: #c6f24e;
-  --blood: #ff3b2e;
-  --smoke: #1a1a1a;
+  /* dark is default */
+  --color-ink: 10 10 10;
+  --color-cream: 244 239 230;
+  --color-mares: 198 242 78;
+  --color-blood: 255 59 46;
+  --color-smoke: 26 26 26;
+  --color-ash: 42 42 42;
+  --color-bone: 232 226 212;
+}
+
+html[data-theme="light"] {
+  --color-ink: 244 239 230;
+  --color-cream: 15 15 15;
+  --color-mares: 68 130 0;
+  --color-blood: 204 30 20;
+  --color-smoke: 228 222 210;
+  --color-ash: 210 204 190;
+  --color-bone: 26 26 26;
 }
 
 * {
@@ -17,9 +30,10 @@
 
 html,
 body {
-  background: var(--ink);
-  color: var(--cream);
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-cream));
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html.lenis,
@@ -40,8 +54,8 @@ html.lenis body {
 }
 
 ::selection {
-  background: var(--mares);
-  color: var(--ink);
+  background: rgb(var(--color-mares));
+  color: rgb(var(--color-ink));
 }
 
 /* Grain overlay */

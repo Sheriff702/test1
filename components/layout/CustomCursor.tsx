@@ -31,19 +31,29 @@ export function CustomCursor() {
     const onOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest<HTMLElement>("[data-cursor]");
       if (!target) return;
-      const type = target.dataset.cursor || "hover";
-      gsap.to(ring, { scale: 2.4, backgroundColor: "rgba(198,242,78,0.12)", borderColor: "#c6f24e", duration: 0.4, ease: "expo.out" });
-      gsap.to(dot, { scale: 0, duration: 0.3 });
-      label.textContent = type === "hover" ? "" : type.toUpperCase();
-      gsap.to(label, { opacity: 1, duration: 0.3 });
+      gsap.to(ring, {
+        scale: 1.4,
+        backgroundColor: "rgba(198,242,78,0.15)",
+        borderColor: "#c6f24e",
+        duration: 0.3,
+        ease: "expo.out",
+      });
+      gsap.to(dot, { scale: 0.6, backgroundColor: "#c6f24e", duration: 0.25 });
+      gsap.to(label, { opacity: 0, duration: 0.15 });
     };
 
     const onOut = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest<HTMLElement>("[data-cursor]");
       if (!target) return;
-      gsap.to(ring, { scale: 1, backgroundColor: "rgba(255,255,255,0)", borderColor: "rgba(244,239,230,0.5)", duration: 0.4, ease: "expo.out" });
-      gsap.to(dot, { scale: 1, duration: 0.3 });
-      gsap.to(label, { opacity: 0, duration: 0.2 });
+      gsap.to(ring, {
+        scale: 1,
+        backgroundColor: "rgba(255,255,255,0)",
+        borderColor: "rgba(244,239,230,0.5)",
+        duration: 0.3,
+        ease: "expo.out",
+      });
+      gsap.to(dot, { scale: 1, backgroundColor: "#f4efe6", duration: 0.25 });
+      gsap.to(label, { opacity: 0, duration: 0.15 });
     };
 
     window.addEventListener("mousemove", onMove);

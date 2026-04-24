@@ -3,12 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { products } from "@/lib/products";
+import { usePreferences } from "@/lib/preferences";
 
 export function FeaturedGrid() {
   const ref = useRef<HTMLElement>(null);
   const featured = products.slice(0, 4);
+  const { t } = usePreferences();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -16,27 +18,17 @@ export function FeaturedGrid() {
       const cards = gsap.utils.toArray<HTMLElement>(".fg-card");
       cards.forEach((card) => {
         const img = card.querySelector(".fg-img");
-        const info = card.querySelector(".fg-info");
         gsap.from(card, {
-          y: 60,
-          opacity: 0,
+          y: 40,
           duration: 1.1,
           ease: "expo.out",
-          scrollTrigger: { trigger: card, start: "top 92%", once: true },
+          scrollTrigger: { trigger: card, start: "top 95%", once: true },
         });
         gsap.from(img, {
-          scale: 1.2,
+          scale: 1.15,
           duration: 1.4,
           ease: "expo.out",
-          scrollTrigger: { trigger: card, start: "top 92%", once: true },
-        });
-        gsap.from(info, {
-          y: 20,
-          opacity: 0,
-          duration: 1,
-          delay: 0.15,
-          ease: "expo.out",
-          scrollTrigger: { trigger: card, start: "top 92%", once: true },
+          scrollTrigger: { trigger: card, start: "top 95%", once: true },
         });
       });
     }, ref);
@@ -48,9 +40,11 @@ export function FeaturedGrid() {
       <div className="container mx-auto">
         <div className="flex items-end justify-between mb-16">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">/ Featured</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">
+              {t("featured")}
+            </p>
             <h2 className="font-display text-5xl md:text-7xl tracking-tight leading-none">
-              Core drop.
+              {t("coreDrop")}
             </h2>
           </div>
           <Link
@@ -58,7 +52,7 @@ export function FeaturedGrid() {
             data-cursor="view"
             className="font-mono text-xs uppercase tracking-widest text-cream/70 hover:text-mares transition-colors border-b border-cream/30 hover:border-mares pb-1 hidden md:inline"
           >
-            See all →
+            {t("seeAll")}
           </Link>
         </div>
 

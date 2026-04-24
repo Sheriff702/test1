@@ -3,8 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-
-const TOKENS = ["NEW DROP", "SS26", "URBAN UNIFORM", "BUILT FOR THE STREET", "MARES ✦"];
+import { usePreferences } from "@/lib/preferences";
 
 export function HeroMarquee({
   direction = 1,
@@ -15,6 +14,13 @@ export function HeroMarquee({
 }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const { t } = usePreferences();
+  const TOKENS = [
+    t("newDrop").toUpperCase(),
+    t("urbanUniform").toUpperCase(),
+    t("subPart2").replace(/,$/, "").toUpperCase(),
+    "MARES",
+  ];
 
   useEffect(() => {
     const inner = innerRef.current!;
@@ -56,7 +62,7 @@ export function HeroMarquee({
   return (
     <div
       ref={rowRef}
-      className={cn("overflow-hidden whitespace-nowrap", className)}
+      className={cn("overflow-hidden whitespace-nowrap z-50", className)}
     >
       <div ref={innerRef} className="inline-flex will-change-transform">
         {[...Array(2)].map((_, i) => (
@@ -67,7 +73,7 @@ export function HeroMarquee({
                 className="font-display text-6xl md:text-8xl tracking-tight px-8 leading-none flex items-center gap-8"
               >
                 {t}
-                <span className="text-mares">/</span>
+                <span className="text-mares">✦</span>
               </span>
             ))}
           </div>

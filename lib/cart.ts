@@ -76,6 +76,14 @@ export const useCart = create<CartState>()(
       total: () => get().items.reduce((t, i) => t + i.price * i.qty, 0),
       count: () => get().items.reduce((t, i) => t + i.qty, 0),
     }),
-    { name: "mares-cart" },
+    {
+      name: "mares-cart",
+      partialize: (state) => ({ items: state.items }),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        items: (persistedState as { items?: CartItem[] })?.items ?? [],
+        isOpen: false,
+      }),
+    },
   ),
 );

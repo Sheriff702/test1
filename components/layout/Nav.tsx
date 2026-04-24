@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
+import { PreferencesSwitcher } from "./PreferencesSwitcher";
+import { usePreferences } from "@/lib/preferences";
 
 const LINKS = [
-  { href: "/shop", label: "Shop" },
-  { href: "/lookbook", label: "Lookbook" },
-  { href: "/about", label: "About" },
+  { href: "/shop", key: "shop" as const },
+  { href: "/lookbook", key: "lookbook" as const },
+  { href: "/about", key: "about" as const },
 ];
 
 export function Nav() {
@@ -18,6 +20,7 @@ export function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const openCart = useCart((s) => s.open);
   const count = useCart((s) => s.count());
+  const { t } = usePreferences();
 
   useEffect(() => setMounted(true), []);
 
@@ -32,10 +35,10 @@ export function Nav() {
     <header
       ref={navRef}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-expo",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-expo backdrop-blur-md",
         scrolled
-          ? "bg-ink/70 backdrop-blur-md border-b border-cream/5 py-3"
-          : "bg-transparent py-6",
+          ? "bg-ink/80 border-b border-cream/10 py-3"
+          : "bg-ink/30 py-5",
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -49,20 +52,23 @@ export function Nav() {
 
         <nav className="hidden md:flex items-center gap-10">
           {LINKS.map((link) => (
-            <MagneticLink key={link.href} href={link.href} label={link.label} />
+            <MagneticLink key={link.href} href={link.href} label={t(link.key)} />
           ))}
         </nav>
 
-        <button
-          data-cursor="cart"
-          onClick={openCart}
-          className="font-mono text-xs uppercase tracking-widest flex items-center gap-2 group"
-        >
-          <span>Cart</span>
-          <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-mares group-hover:text-ink group-hover:border-mares transition-colors">
-            {mounted ? count : 0}
-          </span>
-        </button>
+        <div className="flex items-center gap-4">
+          <PreferencesSwitcher />
+          <button
+            data-cursor="cart"
+            onClick={openCart}
+            className="font-mono text-xs uppercase tracking-widest flex items-center gap-2 group"
+          >
+            <span>{t("cart")}</span>
+            <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-mares group-hover:text-ink group-hover:border-mares transition-colors">
+              {mounted ? count : 0}
+            </span>
+          </button>
+        </div>
       </div>
     </header>
   );

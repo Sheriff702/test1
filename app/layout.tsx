@@ -7,6 +7,7 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { CartSheet } from "@/components/cart/CartSheet";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { PreferencesProvider } from "@/lib/preferences";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -48,15 +49,17 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="bg-ink text-cream font-sans grain antialiased">
-        <SmoothScroll>
-          <CustomCursor />
-          <Nav />
-          <PageTransition>
-            <main>{children}</main>
-          </PageTransition>
-          <Footer />
-          <CartSheet />
-        </SmoothScroll>
+        <PreferencesProvider>
+          <SmoothScroll>
+            <CustomCursor />
+            <Nav />
+            <PageTransition>
+              <main>{children}</main>
+            </PageTransition>
+            <Footer />
+            <CartSheet />
+          </SmoothScroll>
+        </PreferencesProvider>
       </body>
     </html>
   );
