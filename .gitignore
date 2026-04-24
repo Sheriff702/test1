@@ -45,3 +45,8 @@ next-env.d.ts
 .swarm
 agentdb.rvf
 agentdb.rvf.lock
+.claude/*
+.claude-flow/*
+.swarm/*
+agentdb.rvf
+agentdb.rvf.lock
