@@ -76,7 +76,7 @@ export function LookbookStory() {
           <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">
             {t("lookbookLabelStory")}
           </p>
-          <h1 className="font-display text-7xl md:text-11xl tracking-tighter leading-[0.8]">
+          <h1 className="font-display text-7xl md:text-10xl tracking-tighter leading-[0.8]">
             <span className="lb-hero-title inline-block">
               {t("storyTitleOne")}
               <br />
@@ -105,7 +105,9 @@ export function LookbookStory() {
                 />
               </div>
             </div>
-            <div className={`lb-chapter-text md:col-span-5 ${i % 2 ? "md:order-1" : ""} space-y-4`}>
+            <div
+              className={`lb-chapter-text md:col-span-5 ${i % 2 ? "md:order-1" : ""} space-y-4`}
+            >
               <p className="font-mono text-[10px] uppercase tracking-widest text-mares">
                 {t("chapter")} {c.n}
               </p>

@@ -104,21 +104,27 @@ const TRANSLATIONS: Record<LanguageCode, Dict> = {
     storyTitleOne: "FOUR",
     storyTitleTwo: "CHAPTERS.",
     storyChapter1H: "Concrete",
-    storyChapter1B: "Pre-dawn on the docks. The uniform hasn't earned its name yet.",
+    storyChapter1B:
+      "Pre-dawn on the docks. The uniform hasn't earned its name yet.",
     storyChapter2H: "Signal",
-    storyChapter2B: "Reflective tape catches a passing tram. The city is listening.",
+    storyChapter2B:
+      "Reflective tape catches a passing tram. The city is listening.",
     storyChapter3H: "Static",
     storyChapter3B: "Cotton, fleece, silence. The in-between hours.",
     storyChapter4H: "Drift",
     storyChapter4B: "Rain on nylon. Walking home the long way on purpose.",
     lbHomeTitle1: "Concrete",
-    lbHomeBody1: "Built for the freight elevator, the loading dock, the quiet minute before the night begins.",
+    lbHomeBody1:
+      "Built for the freight elevator, the loading dock, the quiet minute before the night begins.",
     lbHomeTitle2: "Signal",
-    lbHomeBody2: "Reflective tape, silent hardware, soft interior. Designed to disappear and reappear.",
+    lbHomeBody2:
+      "Reflective tape, silent hardware, soft interior. Designed to disappear and reappear.",
     lbHomeTitle3: "Static",
-    lbHomeBody3: "Heavyweight jersey, boxed shoulders, no logo. The uniform before it becomes a uniform.",
+    lbHomeBody3:
+      "Heavyweight jersey, boxed shoulders, no logo. The uniform before it becomes a uniform.",
     lbHomeTitle4: "Drift",
-    lbHomeBody4: "Wide, soft, weatherproof. For the walk home at 3AM when the city finally belongs to you.",
+    lbHomeBody4:
+      "Wide, soft, weatherproof. For the walk home at 3AM when the city finally belongs to you.",
     footerTag: "Built for the street.",
     footerStudio: "Studio",
     footerNewsletter: "Get the drop schedule.",
@@ -202,8 +208,7 @@ const TRANSLATIONS: Record<LanguageCode, Dict> = {
     valueFunctionBody:
       "Varje söm, varje ficka, varje dragkedja — testad på en 40-minuters pendling i regnet.",
     valueNoLogoTitle: "Inga logotyper",
-    valueNoLogoBody:
-      "Präglad hårdvara. Inga brösttryck. Den som vet, vet.",
+    valueNoLogoBody: "Präglad hårdvara. Inga brösttryck. Den som vet, vet.",
     valueBuiltTitle: "Byggt att hålla",
     valueBuiltBody:
       "250–500gsm tyger. Förstärkta belastningspunkter. Plagg du pensionerar, inte byter ut.",
@@ -222,24 +227,30 @@ const TRANSLATIONS: Record<LanguageCode, Dict> = {
     collection: "/ Kollektion",
     items: "plagg",
     item: "plagg",
-    storyTitleOne: "FYRA",
-    storyTitleTwo: "KAPITEL.",
+    storyTitleOne: "KAPITEL",
+    storyTitleTwo: "FYRA.",
     storyChapter1H: "Betong",
-    storyChapter1B: "Före gryningen på hamnen. Uniformen har inte förtjänat sitt namn än.",
+    storyChapter1B:
+      "Före gryningen på hamnen. Uniformen har inte förtjänat sitt namn än.",
     storyChapter2H: "Signal",
-    storyChapter2B: "Reflexband fångar en förbipasserande spårvagn. Staden lyssnar.",
+    storyChapter2B:
+      "Reflexband fångar en förbipasserande spårvagn. Staden lyssnar.",
     storyChapter3H: "Statisk",
     storyChapter3B: "Bomull, fleece, tystnad. Timmarna däremellan.",
     storyChapter4H: "Drift",
     storyChapter4B: "Regn på nylon. Den långa vägen hem med flit.",
     lbHomeTitle1: "Betong",
-    lbHomeBody1: "Byggd för godshissen, lastkajen, den tysta minuten innan natten börjar.",
+    lbHomeBody1:
+      "Byggd för godshissen, lastkajen, den tysta minuten innan natten börjar.",
     lbHomeTitle2: "Signal",
-    lbHomeBody2: "Reflexband, tyst hårdvara, mjukt foder. Designad att försvinna och dyka upp igen.",
+    lbHomeBody2:
+      "Reflexband, tyst hårdvara, mjukt foder. Designad att försvinna och dyka upp igen.",
     lbHomeTitle3: "Statisk",
-    lbHomeBody3: "Kraftig jersey, boxiga axlar, ingen logotyp. Uniformen innan den blir en uniform.",
+    lbHomeBody3:
+      "Kraftig jersey, boxiga axlar, ingen logotyp. Uniformen innan den blir en uniform.",
     lbHomeTitle4: "Drift",
-    lbHomeBody4: "Vid, mjuk, vattentät. För vandringen hem klockan 3 när staden äntligen tillhör dig.",
+    lbHomeBody4:
+      "Vid, mjuk, vattentät. För vandringen hem klockan 3 när staden äntligen tillhör dig.",
     footerTag: "Byggt för gatan.",
     footerStudio: "Studio",
     footerNewsletter: "Få släppschemat.",
