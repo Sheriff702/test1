@@ -227,8 +227,8 @@ const TRANSLATIONS: Record<LanguageCode, Dict> = {
     collection: "/ Kollektion",
     items: "plagg",
     item: "plagg",
-    storyTitleOne: "KAPITEL",
-    storyTitleTwo: "FYRA.",
+    storyTitleOne: "FYRA",
+    storyTitleTwo: "KAPITEL.",
     storyChapter1H: "Betong",
     storyChapter1B:
       "Före gryningen på hamnen. Uniformen har inte förtjänat sitt namn än.",

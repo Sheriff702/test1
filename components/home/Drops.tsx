@@ -61,7 +61,7 @@ export function Drops() {
       });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [t]);
 
   return (
     <section
@@ -85,7 +85,9 @@ export function Drops() {
         </div>
 
         <div className="drops-copy order-1 md:order-2">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">{t("nextDrop")}</p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">
+            {t("nextDrop")}
+          </p>
           <h2 className="drops-title font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8">
             {t("newDrop")}
           </h2>
