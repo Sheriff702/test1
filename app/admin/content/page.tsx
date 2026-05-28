@@ -4,7 +4,7 @@ import {
   TRANSLATIONS,
   type LanguageCode,
   type TranslationKey,
-} from "@/lib/preferences";
+} from "@/lib/preferences-data";
 import { getAllOverrides } from "@/lib/content";
 import { saveContent } from "../actions";
 import { ContentEditor } from "@/components/admin/ContentEditor";

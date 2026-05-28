@@ -1,7 +1,7 @@
 import "server-only";
 import { db, ensureReady } from "@/db";
 import { siteContent } from "@/db/schema";
-import { LANGUAGES, type LanguageCode } from "./preferences";
+import { LANGUAGES, type LanguageCode } from "./preferences-data";
 
 export type ContentOverrides = Partial<Record<LanguageCode, Record<string, string>>>;
 

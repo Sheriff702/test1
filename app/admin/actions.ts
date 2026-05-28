@@ -9,7 +9,7 @@ import { z } from "zod";
 import { db, ensureReady } from "@/db";
 import { products, siteContent } from "@/db/schema";
 import { isAuthed } from "@/lib/auth";
-import { LANGUAGES, TRANSLATION_KEYS } from "@/lib/preferences";
+import { LANGUAGES, TRANSLATION_KEYS } from "@/lib/preferences-data";
 
 async function guard() {
   if (!(await isAuthed())) {
