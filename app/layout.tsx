@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartSheet } from "@/components/cart/CartSheet";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { PreferencesProvider } from "@/lib/preferences";
+import { isAuthed } from "@/lib/auth";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -38,11 +39,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const adminAuthed = await isAuthed();
   return (
     <html
       lang="en"
@@ -52,7 +54,7 @@ export default function RootLayout({
         <PreferencesProvider>
           <SmoothScroll>
             <CustomCursor />
-            <Nav />
+            <Nav adminAuthed={adminAuthed} />
             <PageTransition>
               <main>{children}</main>
             </PageTransition>
