@@ -5,35 +5,16 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { usePreferences } from "@/lib/preferences";
 
-const SLIDES_RAW = [
-  {
-    src: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1600&q=80",
-    n: 1 as const,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1600&q=80",
-    n: 2 as const,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1600&q=80",
-    n: 3 as const,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-    n: 4 as const,
-  },
-];
-
 export function Lookbook() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const { t } = usePreferences();
-  const SLIDES = SLIDES_RAW.map((s) => ({
-    src: s.src,
-    title: `${t("chapter")} 0${s.n}`,
-    subtitle: t(`lbHomeTitle${s.n}` as "lbHomeTitle1"),
-    body: t(`lbHomeBody${s.n}` as "lbHomeBody1"),
+  const SLIDES = ([1, 2, 3, 4] as const).map((n) => ({
+    src: t(`imgLbHome${n}` as "imgLbHome1"),
+    title: `${t("chapter")} 0${n}`,
+    subtitle: t(`lbHomeTitle${n}` as "lbHomeTitle1"),
+    body: t(`lbHomeBody${n}` as "lbHomeBody1"),
   }));
 
   useEffect(() => {

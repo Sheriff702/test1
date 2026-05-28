@@ -78,7 +78,7 @@ export function Hero() {
       {/* Background image */}
       <div className="hero-bg absolute inset-0 will-change-transform">
         <Image
-          src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1400&q=80"
+          src={t("imgHeroBg")}
           alt=""
           fill
           priority
@@ -91,7 +91,7 @@ export function Hero() {
       {/* Foreground model */}
       <div className="hero-model absolute right-0 bottom-0 top-0 w-[65%] md:w-[55%] lg:w-[48%] pointer-events-none will-change-transform">
         <Image
-          src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2400&q=80"
+          src={t("imgHeroModel")}
           alt="Model wearing MARES"
           fill
           priority

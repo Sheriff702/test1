@@ -85,6 +85,20 @@ export const TRANSLATIONS: Record<LanguageCode, Dict> = {
     catBottoms: "Bottoms",
     catFootwear: "Footwear",
     catAccessories: "Accessories",
+    // Image URLs (editable from /admin/content). Empty override falls back
+    // to these defaults so the storefront never goes image-less.
+    imgHeroBg: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1400&q=80",
+    imgHeroModel: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2400&q=80",
+    imgDrops: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1400&q=80",
+    imgAbout: "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80",
+    imgLbHome1: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1600&q=80",
+    imgLbHome2: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1600&q=80",
+    imgLbHome3: "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1600&q=80",
+    imgLbHome4: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
+    imgLbStory1: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=2000&q=80",
+    imgLbStory2: "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=2000&q=80",
+    imgLbStory3: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=2000&q=80",
+    imgLbStory4: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2000&q=80",
     shopTitle: "Shop",
     shopIntro:
       "Twelve pieces, engineered. Filter by category — the grid reflows.",

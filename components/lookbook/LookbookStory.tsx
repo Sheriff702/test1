@@ -5,22 +5,15 @@ import { useEffect, useRef } from "react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { usePreferences } from "@/lib/preferences";
 
-const STORY_IMAGES = [
-  "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=2000&q=80",
-  "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=2000&q=80",
-  "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=2000&q=80",
-  "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=2000&q=80",
-];
-
 export function LookbookStory() {
   const ref = useRef<HTMLDivElement>(null);
   const { t, lang } = usePreferences();
 
-  const STORY = STORY_IMAGES.map((src, i) => ({
-    n: `0${i + 1}`,
-    h: t(`storyChapter${i + 1}H` as "storyChapter1H"),
-    b: t(`storyChapter${i + 1}B` as "storyChapter1B"),
-    src,
+  const STORY = ([1, 2, 3, 4] as const).map((i) => ({
+    n: `0${i}`,
+    h: t(`storyChapter${i}H` as "storyChapter1H"),
+    b: t(`storyChapter${i}B` as "storyChapter1B"),
+    src: t(`imgLbStory${i}` as "imgLbStory1"),
   }));
 
   useEffect(() => {

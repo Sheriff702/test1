@@ -72,7 +72,7 @@ export function Drops() {
         <div className="relative aspect-[4/5] overflow-hidden bg-smoke order-2 md:order-1">
           <div className="drops-img absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1400&q=80"
+              src={t("imgDrops")}
               alt="Next drop"
               fill
               sizes="(max-width:768px) 100vw, 50vw"
