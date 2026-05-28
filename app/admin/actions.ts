@@ -162,12 +162,32 @@ export async function uploadImage(
   if (file.size > 8 * 1024 * 1024) return { error: "Max 8MB" };
   const allowed = ["image/jpeg", "image/png", "image/webp", "image/avif"];
   if (!allowed.includes(file.type)) return { error: "Use JPG/PNG/WebP/AVIF" };
+
+  // Serverless hosts have a read-only filesystem outside /tmp. The local
+  // filesystem upload path is for self-hosted / dev only. On Vercel, paste a
+  // CDN URL into the image field instead (or wire BLOB_READ_WRITE_TOKEN in
+  // future to push to Vercel Blob).
+  if (process.env.VERCEL) {
+    return {
+      error:
+        "Uploads disabled on Vercel. Paste an image URL into the field instead, or configure Vercel Blob storage.",
+    };
+  }
+
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const dir = path.join(process.cwd(), "public", "uploads");
-  await fs.mkdir(dir, { recursive: true });
-  const buf = Buffer.from(await file.arrayBuffer());
-  await fs.writeFile(path.join(dir, safeName), buf);
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    const buf = Buffer.from(await file.arrayBuffer());
+    await fs.writeFile(path.join(dir, safeName), buf);
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "EROFS" || code === "EACCES") {
+      return { error: "Filesystem is read-only here. Paste a URL instead." };
+    }
+    throw err;
+  }
   return { url: `/uploads/${safeName}` };
 }
 

@@ -1,11 +1,31 @@
 import "server-only";
 import path from "path";
 import fs from "fs";
-import { createClient, type Client } from "@libsql/client";
+import { createClient, type Client, type Config } from "@libsql/client";
 import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
 import * as schema from "./schema";
 
-const DB_PATH = process.env.DB_PATH ?? path.join(process.cwd(), "data", "mares.db");
+/**
+ * Where the database lives:
+ *
+ * 1. Turso (preferred for production) — set TURSO_DATABASE_URL and
+ *    TURSO_AUTH_TOKEN in Vercel env. Reads/writes go to a persistent libsql
+ *    instance and survive cold starts.
+ * 2. Local file — used during dev and on long-lived hosts. DB_PATH overrides
+ *    the default ./data/mares.db.
+ * 3. Vercel without Turso configured — falls back to /tmp/mares.db. The file
+ *    persists for the lifetime of the container but is wiped on each cold
+ *    start. Fine for demos, not for real data.
+ */
+const TURSO_URL = process.env.TURSO_DATABASE_URL;
+const TURSO_TOKEN = process.env.TURSO_AUTH_TOKEN;
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+function resolveLocalPath(): string {
+  if (process.env.DB_PATH) return process.env.DB_PATH;
+  if (isServerless) return "/tmp/mares.db";
+  return path.join(process.cwd(), "data", "mares.db");
+}
 
 type Db = LibSQLDatabase<typeof schema>;
 
@@ -16,8 +36,23 @@ declare global {
 }
 
 function build(): { client: Client; db: Db } {
-  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
-  const client = createClient({ url: `file:${DB_PATH}` });
+  let config: Config;
+  if (TURSO_URL) {
+    config = TURSO_TOKEN
+      ? { url: TURSO_URL, authToken: TURSO_TOKEN }
+      : { url: TURSO_URL };
+  } else {
+    const dbPath = resolveLocalPath();
+    try {
+      fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+    } catch (err) {
+      // /tmp/ already exists on serverless; only re-throw on other failures.
+      const code = (err as NodeJS.ErrnoException).code;
+      if (code !== "EEXIST" && code !== "EROFS") throw err;
+    }
+    config = { url: `file:${dbPath}` };
+  }
+  const client = createClient(config);
   const db = drizzle(client, { schema });
   return { client, db };
 }
