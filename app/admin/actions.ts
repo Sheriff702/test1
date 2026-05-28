@@ -163,23 +163,35 @@ export async function uploadImage(
   const allowed = ["image/jpeg", "image/png", "image/webp", "image/avif"];
   if (!allowed.includes(file.type)) return { error: "Use JPG/PNG/WebP/AVIF" };
 
-  // Serverless hosts have a read-only filesystem outside /tmp. The local
-  // filesystem upload path is for self-hosted / dev only. On Vercel, paste a
-  // CDN URL into the image field instead (or wire BLOB_READ_WRITE_TOKEN in
-  // future to push to Vercel Blob).
+  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const buf = Buffer.from(await file.arrayBuffer());
+
+  // Cloudflare R2 (preferred — works on Vercel, no egress cost).
+  const { r2Configured, r2Upload } = await import("@/lib/r2");
+  if (r2Configured) {
+    try {
+      const url = await r2Upload({
+        key: `uploads/${safeName}`,
+        body: buf,
+        contentType: file.type,
+      });
+      return { url };
+    } catch (err) {
+      return { error: `R2 upload failed: ${(err as Error).message}` };
+    }
+  }
+
+  // Local fallback for dev / VPS hosts.
   if (process.env.VERCEL) {
     return {
       error:
-        "Uploads disabled on Vercel. Paste an image URL into the field instead, or configure Vercel Blob storage.",
+        "R2 not configured. Set R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET and R2_PUBLIC_URL.",
     };
   }
-
-  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const dir = path.join(process.cwd(), "public", "uploads");
   try {
     await fs.mkdir(dir, { recursive: true });
-    const buf = Buffer.from(await file.arrayBuffer());
     await fs.writeFile(path.join(dir, safeName), buf);
   } catch (err) {
     const code = (err as NodeJS.ErrnoException).code;
