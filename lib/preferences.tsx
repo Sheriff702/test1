@@ -27,7 +27,7 @@ export type LanguageCode = (typeof LANGUAGES)[number]["code"];
 
 type Dict = Record<string, string>;
 
-const TRANSLATIONS: Record<LanguageCode, Dict> = {
+export const TRANSLATIONS: Record<LanguageCode, Dict> = {
   en: {
     shop: "Shop",
     lookbook: "Lookbook",
@@ -555,17 +555,32 @@ const TRANSLATIONS: Record<LanguageCode, Dict> = {
   },
 };
 
+export type TranslationKey = keyof (typeof TRANSLATIONS)["en"];
+
+/** All translation keys, derived from the English dictionary which is the source of truth. */
+export const TRANSLATION_KEYS = Object.keys(TRANSLATIONS.en) as TranslationKey[];
+
+export type ContentOverrides = Partial<
+  Record<LanguageCode, Record<string, string>>
+>;
+
 type PrefsCtx = {
   theme: Theme;
   setTheme: (t: Theme) => void;
   lang: LanguageCode;
   setLang: (l: LanguageCode) => void;
-  t: (key: keyof (typeof TRANSLATIONS)["en"]) => string;
+  t: (key: TranslationKey) => string;
 };
 
 const Ctx = createContext<PrefsCtx | null>(null);
 
-export function PreferencesProvider({ children }: { children: ReactNode }) {
+export function PreferencesProvider({
+  children,
+  overrides,
+}: {
+  children: ReactNode;
+  overrides?: ContentOverrides;
+}) {
   const [theme, setThemeState] = useState<Theme>("dark");
   const [lang, setLangState] = useState<LanguageCode>("en");
 
@@ -591,8 +606,11 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     document.documentElement.setAttribute("lang", l);
   };
 
-  const t = (key: keyof (typeof TRANSLATIONS)["en"]) =>
-    TRANSLATIONS[lang][key] ?? TRANSLATIONS.en[key];
+  const t = (key: TranslationKey) => {
+    const override = overrides?.[lang]?.[key];
+    if (override !== undefined && override !== "") return override;
+    return TRANSLATIONS[lang][key] ?? TRANSLATIONS.en[key];
+  };
 
   return (
     <Ctx.Provider value={{ theme, setTheme, lang, setLang, t }}>

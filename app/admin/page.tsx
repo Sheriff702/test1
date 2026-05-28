@@ -47,12 +47,18 @@ export default async function AdminDashboard() {
         <Stat label="Archived" value={archivedCount} />
       </div>
 
-      <div className="grid sm:grid-cols-1 gap-4">
+      <div className="grid sm:grid-cols-2 gap-4">
         <Tile
           href="/admin/products"
           title="Products"
           body="Add a new piece, edit price, sizes, colors and images, archive what's gone. Drag the list to reorder how products appear on the storefront."
           cta="Manage products →"
+        />
+        <Tile
+          href="/admin/content"
+          title="Site copy"
+          body="Edit every label, headline and paragraph on the storefront, per language. Leave a field blank to keep the in-code default."
+          cta="Edit content →"
         />
       </div>
     </div>

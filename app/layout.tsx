@@ -9,6 +9,7 @@ import { CartSheet } from "@/components/cart/CartSheet";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { PreferencesProvider } from "@/lib/preferences";
 import { isAuthed } from "@/lib/auth";
+import { getAllOverrides } from "@/lib/content";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -44,14 +45,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const adminAuthed = await isAuthed();
+  const [adminAuthed, overrides] = await Promise.all([
+    isAuthed(),
+    getAllOverrides(),
+  ]);
   return (
     <html
       lang="en"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="bg-ink text-cream font-sans grain antialiased">
-        <PreferencesProvider>
+        <PreferencesProvider overrides={overrides}>
           <SmoothScroll>
             <CustomCursor />
             <Nav adminAuthed={adminAuthed} />

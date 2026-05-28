@@ -7,8 +7,9 @@ import path from "path";
 import fs from "fs/promises";
 import { z } from "zod";
 import { db, ensureReady } from "@/db";
-import { products } from "@/db/schema";
+import { products, siteContent } from "@/db/schema";
 import { isAuthed } from "@/lib/auth";
+import { LANGUAGES, TRANSLATION_KEYS } from "@/lib/preferences";
 
 async function guard() {
   if (!(await isAuthed())) {
@@ -168,6 +169,43 @@ export async function uploadImage(
   const buf = Buffer.from(await file.arrayBuffer());
   await fs.writeFile(path.join(dir, safeName), buf);
   return { url: `/uploads/${safeName}` };
+}
+
+/**
+ * Save translation overrides. Form fields are encoded as "lang::key" so a
+ * single form can edit any number of language/key pairs in one shot. Empty
+ * strings delete the override (so the in-code default takes over again).
+ */
+export async function saveContent(formData: FormData) {
+  await guard();
+  const validLangs = new Set(LANGUAGES.map((l) => l.code as string));
+  const validKeys = new Set<string>(TRANSLATION_KEYS);
+
+  for (const [field, raw] of formData.entries()) {
+    if (typeof raw !== "string") continue;
+    if (!field.includes("::")) continue;
+    const [lang, key] = field.split("::");
+    if (!validLangs.has(lang) || !validKeys.has(key)) continue;
+    const id = `${lang}::${key}`;
+    const value = raw.trim();
+
+    if (value === "") {
+      await db.delete(siteContent).where(eq(siteContent.id, id)).run();
+      continue;
+    }
+
+    await db
+      .insert(siteContent)
+      .values({ id, lang, key, value })
+      .onConflictDoUpdate({
+        target: siteContent.id,
+        set: { value, updatedAt: Date.now() },
+      })
+      .run();
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/content");
 }
 
 export async function saveProductOrder(slugs: string[]) {

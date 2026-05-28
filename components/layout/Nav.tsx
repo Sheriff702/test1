@@ -19,6 +19,7 @@ const PUBLIC_LINKS = [
 const ADMIN_LINKS = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/products", label: "Products" },
+  { href: "/admin/content", label: "Content" },
 ];
 
 export function Nav({ adminAuthed = false }: { adminAuthed?: boolean }) {

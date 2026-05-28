@@ -18,4 +18,11 @@ CREATE TABLE `products` (
 	`updated_at` integer NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `products_slug_unique` ON `products` (`slug`);
+CREATE UNIQUE INDEX `products_slug_unique` ON `products` (`slug`);--> statement-breakpoint
+CREATE TABLE `site_content` (
+	`id` text PRIMARY KEY NOT NULL,
+	`lang` text NOT NULL,
+	`key` text NOT NULL,
+	`value` text DEFAULT '' NOT NULL,
+	`updated_at` integer NOT NULL
+);
