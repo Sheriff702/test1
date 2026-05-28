@@ -30,6 +30,23 @@ function endpoint(c: D1Config) {
   return `https://api.cloudflare.com/client/v4/accounts/${c.accountId}/d1/database/${c.databaseId}/query`;
 }
 
+/**
+ * Normalize JS values to what D1's REST API accepts. D1 only handles JSON
+ * scalars (string, number, null). Booleans become 0/1 the way SQLite stores
+ * them; objects/arrays get JSON-stringified (Drizzle's `mode: "json"` columns
+ * arrive as JS arrays/objects, but D1 needs a TEXT value over the wire).
+ */
+function normalizeParams(params: unknown[]): unknown[] {
+  return params.map((p) => {
+    if (p === undefined || p === null) return null;
+    if (typeof p === "boolean") return p ? 1 : 0;
+    if (typeof p === "string" || typeof p === "number") return p;
+    if (typeof p === "bigint") return Number(p);
+    // Drizzle's JSON columns leak through as JS arrays/objects.
+    return JSON.stringify(p);
+  });
+}
+
 async function callD1(
   cfg: D1Config,
   sql: string,
@@ -41,8 +58,7 @@ async function callD1(
       Authorization: `Bearer ${cfg.apiToken}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ sql, params }),
-    // D1 doesn't need caching here; this runs in server actions / RSC.
+    body: JSON.stringify({ sql, params: normalizeParams(params) }),
     cache: "no-store",
   });
 
@@ -58,8 +74,8 @@ async function callD1(
   }
 
   // D1 returns rows as objects; drizzle/sqlite-proxy wants rows-as-arrays so
-  // the column order matches the SELECT. We preserve it from Object.values
-  // (which follows insertion order for plain objects, matching the SQL).
+  // the column order matches the SELECT. Object.values follows insertion
+  // order for plain objects, matching the column order D1 sends back.
   const rows = json.result?.[0]?.results ?? [];
   return rows.map((r) => Object.values(r));
 }
