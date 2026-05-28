@@ -168,7 +168,7 @@ export async function uploadImage(
   const buf = Buffer.from(await file.arrayBuffer());
 
   // Cloudflare R2 (preferred — works on Vercel, no egress cost).
-  const { r2Configured, r2Upload } = await import("@/lib/r2");
+  const { r2Configured, r2Upload } = await import("@/cloudflare/r2");
   if (r2Configured) {
     try {
       const url = await r2Upload({

@@ -5,7 +5,7 @@ import { createClient, type Client } from "@libsql/client";
 import { drizzle as drizzleLibsql, type LibSQLDatabase } from "drizzle-orm/libsql";
 import { drizzle as drizzleProxy, type SqliteRemoteDatabase } from "drizzle-orm/sqlite-proxy";
 import * as schema from "./schema";
-import { makeD1Driver, makeD1BatchDriver } from "./d1-http";
+import { makeD1Driver, makeD1BatchDriver } from "@/cloudflare/d1-http";
 
 /**
  * Backend selection:
