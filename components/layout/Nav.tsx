@@ -1,26 +1,37 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 import { PreferencesSwitcher } from "./PreferencesSwitcher";
 import { usePreferences } from "@/lib/preferences";
+import { logoutAction } from "@/app/admin/admin-actions";
 
-const LINKS = [
+const PUBLIC_LINKS = [
   { href: "/shop", key: "shop" as const },
   { href: "/lookbook", key: "lookbook" as const },
   { href: "/about", key: "about" as const },
 ];
 
-export function Nav() {
+const ADMIN_LINKS = [
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/content", label: "Content" },
+];
+
+export function Nav({ adminAuthed = false }: { adminAuthed?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const openCart = useCart((s) => s.open);
   const count = useCart((s) => s.count());
   const { t } = usePreferences();
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin") ?? false;
+  const showAdminLinks = isAdmin && adminAuthed;
 
   useEffect(() => setMounted(true), []);
 
@@ -43,34 +54,96 @@ export function Nav() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link
-          href="/"
+          href={showAdminLinks ? "/admin" : "/"}
           data-cursor="home"
-          className="font-display text-2xl tracking-tight leading-none"
+          className="font-display text-2xl tracking-tight leading-none flex items-center gap-2"
         >
           MARES<span className="text-mares">.</span>
+          {showAdminLinks ? (
+            <span className="font-mono text-[10px] uppercase tracking-widest text-mares/80 border border-mares/40 rounded px-1.5 py-0.5 leading-none">
+              admin
+            </span>
+          ) : null}
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">
-          {LINKS.map((link) => (
-            <MagneticLink key={link.href} href={link.href} label={t(link.key)} />
-          ))}
+          {showAdminLinks
+            ? ADMIN_LINKS.map((link) => (
+                <AdminLink
+                  key={link.href}
+                  href={link.href}
+                  label={link.label}
+                  active={pathname === link.href || (link.href !== "/admin" && pathname?.startsWith(link.href))}
+                />
+              ))
+            : PUBLIC_LINKS.map((link) => (
+                <MagneticLink key={link.href} href={link.href} label={t(link.key)} />
+              ))}
         </nav>
 
         <div className="flex items-center gap-4">
-          <PreferencesSwitcher />
-          <button
-            data-cursor="cart"
-            onClick={openCart}
-            className="font-mono text-xs uppercase tracking-widest flex items-center gap-2 group"
-          >
-            <span>{t("cart")}</span>
-            <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-mares group-hover:text-ink group-hover:border-mares transition-colors">
-              {mounted ? count : 0}
-            </span>
-          </button>
+          {showAdminLinks ? (
+            <>
+              <Link
+                href="/"
+                target="_blank"
+                data-cursor="view"
+                className="font-mono text-[10px] uppercase tracking-widest text-cream/70 hover:text-mares transition-colors"
+              >
+                View site ↗
+              </Link>
+              <form action={logoutAction}>
+                <button
+                  type="submit"
+                  className="font-mono text-[10px] uppercase tracking-widest text-cream/70 hover:text-blood transition-colors"
+                >
+                  Sign out
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <PreferencesSwitcher />
+              <button
+                data-cursor="cart"
+                onClick={openCart}
+                className="font-mono text-xs uppercase tracking-widest flex items-center gap-2 group"
+              >
+                <span>{t("cart")}</span>
+                <span className="w-6 h-6 rounded-full border border-cream/40 text-[10px] flex items-center justify-center group-hover:bg-mares group-hover:text-ink group-hover:border-mares transition-colors">
+                  {mounted ? count : 0}
+                </span>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>
+  );
+}
+
+function AdminLink({
+  href,
+  label,
+  active,
+}: {
+  href: string;
+  label: string;
+  active?: boolean | "";
+}) {
+  return (
+    <Link
+      href={href}
+      data-cursor="view"
+      className={cn(
+        "relative font-mono text-xs uppercase tracking-widest transition-colors after:absolute after:left-0 after:-bottom-1 after:w-full after:h-px after:bg-mares after:origin-left after:transition-transform after:duration-500 after:ease-expo inline-block",
+        active
+          ? "text-mares after:scale-x-100"
+          : "text-cream/80 hover:text-cream after:scale-x-0 hover:after:scale-x-100",
+      )}
+    >
+      {label}
+    </Link>
   );
 }
 

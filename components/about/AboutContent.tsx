@@ -71,7 +71,7 @@ export function AboutContent() {
           <div className="md:col-span-5">
             <div className="about-img relative aspect-[3/4] bg-smoke overflow-hidden sticky top-28">
               <Image
-                src="https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80"
+                src={t("imgAbout")}
                 alt="Studio"
                 fill
                 sizes="(max-width:768px) 100vw, 40vw"

@@ -8,6 +8,8 @@ import { Footer } from "@/components/layout/Footer";
 import { CartSheet } from "@/components/cart/CartSheet";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { PreferencesProvider } from "@/lib/preferences";
+import { isAuthed } from "@/lib/auth";
+import { getAllOverrides } from "@/lib/content";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -38,21 +40,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [adminAuthed, overrides] = await Promise.all([
+    isAuthed(),
+    getAllOverrides(),
+  ]);
   return (
     <html
       lang="en"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="bg-ink text-cream font-sans grain antialiased">
-        <PreferencesProvider>
+        <PreferencesProvider overrides={overrides}>
           <SmoothScroll>
             <CustomCursor />
-            <Nav />
+            <Nav adminAuthed={adminAuthed} />
             <PageTransition>
               <main>{children}</main>
             </PageTransition>
