@@ -3,40 +3,45 @@ import path from "path";
 import fs from "fs";
 import { sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/libsql/migrator";
-import { db, client } from "./index";
+import { db, usingD1 } from "./index";
+import type { LibSQLDatabase } from "drizzle-orm/libsql";
+import * as schema from "./schema";
 
 let migrated = false;
 
 /**
- * Apply Drizzle migrations. If the schema was regenerated (so the journal
- * doesn't match) but the tables already exist with the right shape, we treat
- * "table already exists" as success — that just means a prior schema version
- * already created the table. New tables in the latest migration are created
- * by hand so we don't fight Drizzle's journal.
+ * Apply Drizzle migrations against the local libsql database. D1 has its
+ * schema applied out-of-band via drizzle-kit + the REST API, so this is a
+ * no-op when running against D1.
+ *
+ * If a local data/mares.db already has the tables from a prior schema (so
+ * the Drizzle journal is out of date) we replay each migration statement
+ * ignoring "already exists" / "duplicate column" — pull users with a stale
+ * db get auto-upgraded.
  */
 export async function ensureMigrated() {
   if (migrated) return;
+  if (usingD1) {
+    migrated = true;
+    return;
+  }
+  const localDb = db as unknown as LibSQLDatabase<typeof schema>;
   try {
-    await migrate(db, {
+    await migrate(localDb, {
       migrationsFolder: path.join(process.cwd(), "db", "migrations"),
     });
   } catch (err) {
     const msg = (err as Error).message ?? "";
     if (!/already exists/i.test(msg)) throw err;
-    // The journal was wiped (schema regen) but the legacy tables remain.
-    // Replay each migration's statements manually, ignoring "already exists".
-    await replayMigrationsIdempotently();
+    await replayMigrationsIdempotently(localDb);
   }
   migrated = true;
 }
 
-async function replayMigrationsIdempotently() {
+async function replayMigrationsIdempotently(localDb: LibSQLDatabase<typeof schema>) {
   const dir = path.join(process.cwd(), "db", "migrations");
   if (!fs.existsSync(dir)) return;
-  const files = fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".sql"))
-    .sort();
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
 
   for (const file of files) {
     const sqlText = fs.readFileSync(path.join(dir, file), "utf8");
@@ -46,7 +51,7 @@ async function replayMigrationsIdempotently() {
       .filter(Boolean);
     for (const stmt of statements) {
       try {
-        await client.execute(stmt);
+        await localDb.run(sql.raw(stmt));
       } catch (err) {
         const msg = (err as Error).message ?? "";
         if (/already exists|duplicate column/i.test(msg)) continue;
@@ -54,15 +59,4 @@ async function replayMigrationsIdempotently() {
       }
     }
   }
-
-  // Drizzle uses __drizzle_migrations to track applied migrations. If the
-  // journal was regenerated, mark all migration hashes from the journal as
-  // applied so future migrate() calls don't try to re-run them.
-  await db.run(sql`
-    CREATE TABLE IF NOT EXISTS __drizzle_migrations (
-      id SERIAL PRIMARY KEY,
-      hash TEXT NOT NULL,
-      created_at NUMERIC
-    )
-  `);
 }
