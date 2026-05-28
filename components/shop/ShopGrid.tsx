@@ -2,7 +2,11 @@
 
 import { useMemo, useRef, useState, useEffect } from "react";
 import { gsap, Flip } from "@/lib/gsap";
-import { products, categories, type Product } from "@/lib/products";
+import {
+  products as staticProducts,
+  categories,
+  type Product,
+} from "@/lib/products";
 import { ProductCard } from "./ProductCard";
 import { cn } from "@/lib/utils";
 import { usePreferences } from "@/lib/preferences";
@@ -18,18 +22,17 @@ const CAT_KEY: Record<(typeof categories)[number]["slug"], string> = {
   accessories: "catAccessories",
 };
 
-export function ShopGrid() {
+export function ShopGrid({ products }: { products?: Product[] } = {}) {
   const [active, setActive] = useState<Cat>("all");
   const gridRef = useRef<HTMLDivElement>(null);
   const prevActive = useRef<Cat | null>(null);
   const { t } = usePreferences();
+  const source = products ?? staticProducts;
 
   const filtered = useMemo<Product[]>(
     () =>
-      active === "all"
-        ? products
-        : products.filter((p) => p.category === active),
-    [active],
+      active === "all" ? source : source.filter((p) => p.category === active),
+    [active, source],
   );
 
   useEffect(() => {

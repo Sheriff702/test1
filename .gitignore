@@ -40,13 +40,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.claude 
+.claude
 .claude-flow
 .swarm
 agentdb.rvf
 agentdb.rvf.lock
-.claude/*
-.claude-flow/*
-.swarm/*
-agentdb.rvf
-agentdb.rvf.lock
+
+# admin / db
+/data/*.db
+/data/*.db-*
+/public/uploads/*
+!/public/uploads/.gitkeep

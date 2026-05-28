@@ -1,9 +1,12 @@
 import { notFound } from "next/navigation";
 import { ProductDetail } from "@/components/shop/ProductDetail";
-import { getProduct, products } from "@/lib/products";
+import { getAllSlugs, getProductBySlug } from "@/lib/products-db";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -12,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} — MARES`,
@@ -26,7 +29,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
   return <ProductDetail product={product} />;
 }

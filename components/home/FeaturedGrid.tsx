@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { products } from "@/lib/products";
+import { products as staticProducts, type Product } from "@/lib/products";
 import { usePreferences } from "@/lib/preferences";
 
-export function FeaturedGrid() {
+export function FeaturedGrid({ products }: { products?: Product[] } = {}) {
   const ref = useRef<HTMLElement>(null);
-  const featured = products.slice(0, 4);
+  const source = products ?? staticProducts;
+  const featured = source.slice(0, 4);
   const { t } = usePreferences();
 
   useEffect(() => {
