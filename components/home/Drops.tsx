@@ -85,13 +85,22 @@ export function Drops() {
         </div>
 
         <div className="drops-copy order-1 md:order-2">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4">
+          <p
+            data-text-role="drops.label"
+            className="font-mono text-[10px] uppercase tracking-widest text-mares mb-4"
+          >
             {t("nextDrop")}
           </p>
-          <h2 className="drops-title font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8">
+          <h2
+            data-text-role="drops.title"
+            className="drops-title font-display text-6xl md:text-8xl leading-[0.9] tracking-tighter mb-8"
+          >
             {t("newDrop")}
           </h2>
-          <p className="text-lg text-cream/80 max-w-md mb-10 leading-snug">
+          <p
+            data-text-role="drops.body"
+            className="text-lg text-cream/80 max-w-md mb-10 leading-snug"
+          >
             {t("dropBody")}
           </p>
 
@@ -103,7 +112,10 @@ export function Drops() {
               { v: s, l: t("secs") },
             ].map((r) => (
               <div key={r.l} className="border-t border-cream/20 pt-3">
-                <p className="font-display text-4xl md:text-5xl tracking-tight leading-none tabular-nums">
+                <p
+                  data-text-role="drops.counter"
+                  className="font-display text-4xl md:text-5xl tracking-tight leading-none tabular-nums"
+                >
                   {ready ? String(r.v).padStart(2, "0") : "--"}
                 </p>
                 <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-2">

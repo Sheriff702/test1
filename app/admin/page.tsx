@@ -60,6 +60,12 @@ export default async function AdminDashboard() {
           body="Edit every label, headline and paragraph on the storefront, per language. Leave a field blank to keep the in-code default."
           cta="Edit content →"
         />
+        <Tile
+          href="/admin/design"
+          title="Fonts & colors"
+          body="Pick a font for every text role across the storefront, tune the dark / light palettes, preview live before saving."
+          cta="Edit design →"
+        />
       </div>
     </div>
   );

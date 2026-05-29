@@ -41,10 +41,16 @@ export function FeaturedGrid({ products }: { products?: Product[] } = {}) {
       <div className="container mx-auto">
         <div className="flex items-end justify-between mb-16">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3">
+            <p
+              data-text-role="featured.label"
+              className="font-mono text-[10px] uppercase tracking-widest text-mares mb-3"
+            >
               {t("featured")}
             </p>
-            <h2 className="font-display text-5xl md:text-7xl tracking-tight leading-none">
+            <h2
+              data-text-role="featured.title"
+              className="font-display text-5xl md:text-7xl tracking-tight leading-none"
+            >
               {t("coreDrop")}
             </h2>
           </div>
@@ -81,10 +87,16 @@ export function FeaturedGrid({ products }: { products?: Product[] } = {}) {
               </div>
               <div className="fg-info flex items-start justify-between">
                 <div>
-                  <p className="font-display text-lg leading-none tracking-tight">
+                  <p
+                    data-text-role="featured.cardName"
+                    className="font-display text-lg leading-none tracking-tight"
+                  >
                     {p.name}
                   </p>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-1">
+                  <p
+                    data-text-role="featured.cardMeta"
+                    className="font-mono text-[10px] uppercase tracking-widest text-cream/50 mt-1"
+                  >
                     {p.subtitle}
                   </p>
                 </div>

@@ -69,13 +69,24 @@ export function Lookbook() {
               <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent" />
             </div>
             <div className="relative z-10 p-6 md:p-10">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-cream/60">
+              <p
+                data-text-role="lookbook.label"
+                className="font-mono text-[10px] uppercase tracking-widest text-cream/60"
+              >
                 {s.title}
               </p>
-              <h3 className="font-display text-5xl md:text-7xl tracking-tight leading-none my-3">
+              <h3
+                data-text-role="lookbook.title"
+                className="font-display text-5xl md:text-7xl tracking-tight leading-none my-3"
+              >
                 {s.subtitle}
               </h3>
-              <p className="text-sm text-cream/70 max-w-xs">{s.body}</p>
+              <p
+                data-text-role="lookbook.body"
+                className="text-sm text-cream/70 max-w-xs"
+              >
+                {s.body}
+              </p>
             </div>
             <span className="absolute top-4 right-4 font-mono text-[10px] uppercase tracking-widest text-cream/40">
               0{i + 1} / 0{SLIDES.length}

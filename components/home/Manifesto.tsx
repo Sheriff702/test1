@@ -162,7 +162,10 @@ export function Manifesto() {
       <div className="container relative mx-auto grid md:grid-cols-12 gap-10">
         {/* Sidebar meta */}
         <aside className="md:col-span-3 flex flex-col gap-6 md:sticky md:top-32 self-start">
-          <p className="manifesto-eyebrow font-mono text-[10px] uppercase tracking-[0.4em] text-mares flex items-center gap-2">
+          <p
+            data-text-role="manifesto.label"
+            className="manifesto-eyebrow font-mono text-[10px] uppercase tracking-[0.4em] text-mares flex items-center gap-2"
+          >
             <span className="inline-block w-1.5 h-1.5 bg-mares rounded-full animate-pulse" />
             {t("manifesto")}
           </p>
@@ -188,7 +191,10 @@ export function Manifesto() {
             ¶
           </span>
 
-          <p className="manifesto-text relative font-display text-4xl md:text-7xl lg:text-[5.5rem] leading-[1.02] tracking-tight text-cream">
+          <p
+            data-text-role="manifesto.body"
+            className="manifesto-text relative font-display text-4xl md:text-7xl lg:text-[5.5rem] leading-[1.02] tracking-tight text-cream"
+          >
             {TEXT}
           </p>
 

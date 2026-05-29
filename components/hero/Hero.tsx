@@ -109,7 +109,10 @@ export function Hero() {
       {/* Content */}
       <div className="hero-content relative z-10 h-full flex flex-col">
         {/* Top meta */}
-        <div className="pt-32 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] uppercase tracking-widest text-cream/70">
+        <div
+          data-text-role="hero.meta"
+          className="pt-32 px-6 md:px-12 flex justify-between items-start font-mono text-[10px] uppercase tracking-widest text-cream/70"
+        >
           <span className="hero-meta-row flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-mares rounded-full animate-pulse" />
             Live / {t("newCollection")}
@@ -121,10 +124,16 @@ export function Hero() {
 
         {/* Wordmark + subline */}
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
-          <p className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-mares mb-6">
+          <p
+            data-text-role="hero.kicker"
+            className="hero-kicker font-mono text-xs uppercase tracking-[0.3em] text-mares mb-6"
+          >
             {t("heroKicker")}
           </p>
-          <h1 className="font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference">
+          <h1
+            data-text-role="hero.wordmark"
+            className="font-display text-10xl leading-[0.82] tracking-tighter text-cream mix-blend-difference"
+          >
             <span
               className="hero-wordmark inline-block"
               style={{ visibility: "hidden" }}
@@ -133,7 +142,10 @@ export function Hero() {
             </span>
           </h1>
           <div className="mt-10 max-w-xl">
-            <p className="hero-subline text-lg md:text-xl text-cream/80 leading-snug">
+            <p
+              data-text-role="hero.subline"
+              className="hero-subline text-lg md:text-xl text-cream/80 leading-snug"
+            >
               {t("subPart1")}{" "}
               <span className="text-mares">{t("subPart2")}</span> {t("subPart3")}
             </p>

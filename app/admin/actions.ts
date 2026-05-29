@@ -10,6 +10,12 @@ import { db, ensureReady } from "@/db";
 import { products, siteContent } from "@/db/schema";
 import { isAuthed } from "@/lib/auth";
 import { LANGUAGES, TRANSLATION_KEYS } from "@/lib/preferences-data";
+import {
+  COLOR_SLOTS,
+  DESIGN_LANG,
+  FONT_SLOTS,
+  TYPOGRAPHY_ROLES,
+} from "@/lib/design-data";
 
 async function guard() {
   if (!(await isAuthed())) {
@@ -238,6 +244,64 @@ export async function saveContent(formData: FormData) {
 
   revalidatePath("/", "layout");
   revalidatePath("/admin/content");
+}
+
+/**
+ * Save design tokens (fonts + colors). Field names look like:
+ *   font.<slot>            → "Archivo Black"
+ *   color.<scheme>.<slot>  → "#aabbcc"
+ * The values share the site_content table with a synthetic lang "_design".
+ */
+export async function saveDesign(formData: FormData) {
+  await guard();
+  const validFontSlots = new Set<string>(FONT_SLOTS.map((s) => s.key));
+  const validColorSlots = new Set<string>(COLOR_SLOTS.map((s) => s.key));
+  const validRoles = new Set<string>(TYPOGRAPHY_ROLES.map((r) => r.id));
+
+  for (const [field, raw] of formData.entries()) {
+    if (typeof raw !== "string") continue;
+    let valid = false;
+    const parts = field.split(".");
+    if (parts[0] === "font" && parts[1] === "role" && parts.length >= 3) {
+      const roleId = parts.slice(2).join(".");
+      if (validRoles.has(roleId)) valid = true;
+    } else if (
+      parts[0] === "font" &&
+      parts[1] &&
+      validFontSlots.has(parts[1]) &&
+      parts.length === 2
+    ) {
+      valid = true;
+    } else if (
+      parts[0] === "color" &&
+      (parts[1] === "dark" || parts[1] === "light") &&
+      parts[2] &&
+      validColorSlots.has(parts[2])
+    ) {
+      valid = true;
+    }
+    if (!valid) continue;
+
+    const id = `${DESIGN_LANG}::${field}`;
+    const value = raw.trim();
+
+    if (value === "") {
+      await db.delete(siteContent).where(eq(siteContent.id, id)).run();
+      continue;
+    }
+
+    await db
+      .insert(siteContent)
+      .values({ id, lang: DESIGN_LANG, key: field, value })
+      .onConflictDoUpdate({
+        target: siteContent.id,
+        set: { value, updatedAt: Date.now() },
+      })
+      .run();
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/design");
 }
 
 export async function saveProductOrder(slugs: string[]) {

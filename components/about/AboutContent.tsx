@@ -58,10 +58,16 @@ export function AboutContent() {
   return (
     <div ref={ref} className="pt-32 pb-20">
       <div className="  px-6 md:px-12">
-        <p className="font-mono text-[20px] uppercase tracking-widest text-mares mb-4">
+        <p
+          data-text-role="about.label"
+          className="font-mono text-[20px] uppercase tracking-widest text-mares mb-4"
+        >
           {t("studio")}
         </p>
-        <h1 className="font-display text-7xl md:text-[350px] tracking-tighter leading-[0.85] ">
+        <h1
+          data-text-role="about.title"
+          className="font-display text-7xl md:text-[350px] tracking-tighter leading-[0.85] "
+        >
           <span className="about-title inline-block">
             {t("aboutTitle")}
           </span>
@@ -79,7 +85,10 @@ export function AboutContent() {
               />
             </div>
           </div>
-          <div className="md:col-span-7 space-y-8 text-lg leading-relaxed text-cream/80">
+          <div
+            data-text-role="about.paragraph"
+            className="md:col-span-7 space-y-8 text-lg leading-relaxed text-cream/80"
+          >
             <p>{t("aboutP1")}</p>
             <p>{t("aboutP2")}</p>
             <p>{t("aboutP3")}</p>
@@ -95,10 +104,18 @@ export function AboutContent() {
               <p className="font-mono text-xs uppercase tracking-widest text-mares mb-6">
                 {v.n}
               </p>
-              <h3 className="font-display text-3xl tracking-tight leading-tight mb-3">
+              <h3
+                data-text-role="about.valueTitle"
+                className="font-display text-3xl tracking-tight leading-tight mb-3"
+              >
                 {v.t}
               </h3>
-              <p className="text-sm text-cream/70 leading-relaxed">{v.b}</p>
+              <p
+                data-text-role="about.valueBody"
+                className="text-sm text-cream/70 leading-relaxed"
+              >
+                {v.b}
+              </p>
             </div>
           ))}
         </div>

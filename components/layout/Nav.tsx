@@ -20,6 +20,7 @@ const ADMIN_LINKS = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/content", label: "Content" },
+  { href: "/admin/design", label: "Design" },
 ];
 
 export function Nav({ adminAuthed = false }: { adminAuthed?: boolean }) {

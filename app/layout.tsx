@@ -10,6 +10,7 @@ import { PageTransition } from "@/components/layout/PageTransition";
 import { PreferencesProvider } from "@/lib/preferences";
 import { isAuthed } from "@/lib/auth";
 import { getAllOverrides } from "@/lib/content";
+import { buildDesignStyle, buildGoogleFontsHref, getDesignBundle } from "@/lib/design";
 
 const display = Archivo_Black({
   subsets: ["latin"],
@@ -45,15 +46,24 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [adminAuthed, overrides] = await Promise.all([
+  const [adminAuthed, overrides, design] = await Promise.all([
     isAuthed(),
     getAllOverrides(),
+    getDesignBundle(),
   ]);
+  const designStyle = buildDesignStyle(design);
+  const fontsHref = buildGoogleFontsHref(design);
   return (
     <html
       lang="en"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
+      <head>
+        {fontsHref ? (
+          <link rel="stylesheet" href={fontsHref} />
+        ) : null}
+        <style dangerouslySetInnerHTML={{ __html: designStyle }} />
+      </head>
       <body className="bg-ink text-cream font-sans grain antialiased">
         <PreferencesProvider overrides={overrides}>
           <SmoothScroll>
